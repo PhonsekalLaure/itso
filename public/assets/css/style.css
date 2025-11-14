@@ -1,0 +1,193 @@
+
+
+.navbar-sisig {
+    background: #FFFFFF; /* pure white */
+    border-bottom: 2px solid #C4C4C4; /* silver border */
+    box-shadow: 0 2px 8px rgba(196,196,196,0.08);
+}
+
+.sisig-logo {
+    border-radius: 50%;
+    border: 2px solid #A3B18A; /* sage green accent */
+    background: #F5F5F5; /* cool gray */
+    object-fit: cover;
+}
+
+.sisig-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.5rem;
+    color: #7A9E9F; /* dusty blue accent */
+    letter-spacing: 1px;
+    text-shadow: none;
+}
+
+.btn-sisig {
+    background-color: #A3B18A; /* sage green */
+    color: #fff;
+    border: none;
+    transition: background 0.2s;
+}
+.btn-sisig:hover {
+    background-color: #7A9E9F; /* dusty blue */
+    color: #fff;
+}
+
+/* ...rest of your code remains unchanged... */
+
+
+
+
+.carousel-img {
+    height: 550px; /* You can adjust this value */
+    object-fit: cover;
+    object-position: center;
+}
+
+.carousel-caption {
+    background: rgba(163, 177, 138, 0.85); /* sage green accent */
+    border-radius: 1rem;
+    color: #333333;
+    box-shadow: 0 4px 24px rgba(196,196,196,0.15);
+}
+.carousel-caption h5 {
+    color: #FFFFFF;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+.carousel-caption p {
+    color: #FFFFFF;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+.carousel-indicators [data-bs-target] {
+    background-color: #A3B18A;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(60%) sepia(10%) saturate(300%) hue-rotate(90deg) brightness(1.1);
+}
+
+
+
+
+.modal-content {
+    border-radius: 1rem;
+    border: 2px solid #C4C4C4;
+    background: #FFFFFF;
+}
+.modal-header {
+    background: #F5F5F5;
+    color: #333333;
+    border-bottom: 1px solid #C4C4C4;
+}
+.modal-title {
+    color: #7A9E9F;
+    font-weight: bold;
+}
+.modal-footer {
+    background: #F5F5F5;
+    border-top: 1px solid #C4C4C4;
+}
+.btn-danger {
+    background-color: #A3B18A !important;
+    color: #fff !important;
+    border: none;
+}
+.btn-danger:hover {
+    background-color: #7A9E9F !important;
+}
+.btn-secondary {
+    background-color: #C4C4C4 !important;
+    color: #333333 !important;
+    border: none;
+}
+.btn-secondary:hover {
+    background-color: #A3B18A !important;
+    color: #fff !important;
+}
+
+
+
+
+body {
+    background: #FFFFFF;
+    color: #333333;
+}
+.card {
+    border: 1px solid #C4C4C4;
+    border-radius: 1rem;
+    background: #F5F5F5;
+    overflow: hidden;
+}
+.card-header, .card-title, header h1 {
+    color: #7A9E9F;
+    font-weight: bold;
+}
+.form-label, .fw-bold {
+    color: #333333;
+}
+.form-control:focus {
+    border-color: #A3B18A;
+    box-shadow: 0 0 0 0.2rem rgba(163,177,138,0.15);
+}
+.btn-primary, .btn-success {
+    background-color: #A3B18A;
+    color: #fff;
+    border: none;
+}
+.btn-primary:hover, .btn-success:hover {
+    background-color: #7A9E9F;
+}
+input[type="file"].form-control {
+    background-color: #F5F5F5;
+}
+
+
+
+
+.table thead th {
+    background-color: #7a9e9f80;
+    color: #fff;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #F5F5F5;
+}
+.table-hover > tbody > tr:hover {
+    background-color: #7A9E9F !important;
+    color: #fff;
+}
+.table td, .table th {
+    border-color: #C4C4C4;
+    vertical-align: middle;
+}
+.table tbody tr {
+    transition: all 0.15s ease-in-out;
+}
+.table td {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.btn-success, .btn-warning, .btn-danger {
+    border: none;
+}
+.btn-success {
+    background-color: #A3B18A;
+    color: #fff;
+}
+.btn-success:hover {
+    background-color: #7A9E9F;
+}
+.btn-warning {
+    background-color: #7A9E9F;
+    color: #fff;
+}
+.btn-warning:hover {
+    background-color: #A3B18A;
+}
+.btn-danger {
+    background-color: #C4C4C4;
+    color: #333333;
+}
+.btn-danger:hover {
+    background-color: #7A9E9F;
+    color: #fff;
+}
