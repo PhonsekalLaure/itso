@@ -1,12 +1,18 @@
 <?php
-//add session checker
+// Forgot password view (Bootstrap)
 ?>
 
     <div class="row min-vh-100 align-items-center justify-content-center">
         <div class="col-12 col-sm-9 col-md-6 col-lg-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="card-title text-center mb-4">Sign In</h3>
+                    <h3 class="card-title text-center mb-4">Reset Password</h3>
+
+                    <?php if(session()->getFlashdata('success')): ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= session()->getFlashdata('success') ?>
+                        </div>
+                    <?php endif; ?>
 
                     <?php if(session()->getFlashdata('error')): ?>
                         <div class="alert alert-danger" role="alert">
@@ -20,7 +26,11 @@
                         </div>
                     <?php endif; ?>
 
-                    <form action="<?= base_url('auth/authenticate') ?>" method="post" novalidate>
+                    <p class="text-muted small mb-4">
+                        Enter your username and we'll send you a link to reset your password.
+                    </p>
+
+                    <form action="<?= base_url('auth/reset-request') ?>" method="post" novalidate>
                         <?= csrf_field() ?>
 
                         <div class="mb-3">
@@ -28,24 +38,14 @@
                             <input type="text" class="form-control" id="username" name="username" value="<?= set_value('username') ?>" placeholder="Your username" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Your password" required>
-                        </div>
-
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember" <?= set_value('remember') ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
-
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Sign In</button>
+                            <button type="submit" class="btn btn-primary">Send Reset Link</button>
                         </div>
 
                     </form>
 
                     <div class="mt-3 text-center">
-                        <a href="<?= base_url('auth/forgot') ?>">Forgot password?</a>
+                        <a href="<?= base_url('') ?>">Back to login</a>
                     </div>
                 </div>
             </div>
