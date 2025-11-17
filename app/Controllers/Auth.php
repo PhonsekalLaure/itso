@@ -4,6 +4,10 @@ namespace App\Controllers;
 class Auth extends BaseController {
 
     public function login() {
+        if (session()->get('user')) {
+            return redirect()->to(base_url('home'));
+        }
+
         $data = array(
             'title' => 'Login',
         );
@@ -40,6 +44,11 @@ class Auth extends BaseController {
         return view('include\head_view', $data)
             .view('auth\forgot_view')
             .view('include\foot_view');
+    }
+
+    public function logout() {
+        session()->destroy();
+        return redirect()->to(base_url('/'));
     }
 
 }

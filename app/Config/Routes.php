@@ -8,8 +8,11 @@ use CodeIgniter\Router\RouteCollection;
 
 // Routes for Auth controller
 $routes->get('/', 'Auth::login');
-$routes->get('/auth/forgot', 'Auth::forgot');
+$routes->get('auth/login', 'Auth::login');
+$routes->get('auth/forgot', 'Auth::forgot');
 $routes->post('auth/authenticate', 'Auth::authenticate');
+$routes->get('auth/logout', 'Auth::logout');
+
 
 // Routes for Home controller
 $routes->get('home', 'Index::index');
