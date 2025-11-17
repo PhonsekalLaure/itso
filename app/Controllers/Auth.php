@@ -20,7 +20,7 @@ class Auth extends BaseController {
         $password = $this->request->getPost('password');
 
         $user = $usermodel->where('username', $username)
-                          ->where('is_deleted', 0)
+                          ->where('is_deactivated', 0)
                           ->where('role', 'ITSO')
                           ->first();
 

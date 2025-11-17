@@ -18,7 +18,7 @@ class Users_model extends Model {
         'fullname',
         'email',
         'date_created',
-        'is_deleted'
+        'is_deactivated'
     ];
 
     protected bool $allowEmptyInserts = false;
