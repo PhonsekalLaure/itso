@@ -1,5 +1,7 @@
 <?php
-//add session checker
+if (session()->get('user')) {
+    return redirect('users');
+}
 ?>
 
     <div class="row min-vh-100 align-items-center justify-content-center">
