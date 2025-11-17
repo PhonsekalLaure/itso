@@ -7,9 +7,9 @@ class Auth extends BaseController {
         $data = array(
             'title' => 'Login',
         );
-        return view('include\head_view', $data)
-            .view('auth\login_view')
-            .view('include\foot_view');
+        return view('include/head_view', $data)
+            .view('auth/login_view')
+            .view('include/foot_view');
 
     }
 
