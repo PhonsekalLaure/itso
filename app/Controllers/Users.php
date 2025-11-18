@@ -19,7 +19,7 @@ class Users extends BaseController {
             .view('userslist_view', $data)
             .view('include\foot_view');
     }
-/*
+
         public function add(){
         $data = array(
             'title' => 'Add User',
@@ -97,6 +97,6 @@ class Users extends BaseController {
 
         return redirect()->to('users');
     }
-        */
+        
 }
 ?>
