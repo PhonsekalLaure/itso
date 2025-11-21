@@ -2,9 +2,32 @@
         /* Sidebar gradient */
         .sidebar {
             background: linear-gradient(to bottom, #0b824a, #fabc15);
+            width: 250px;
             min-height: 100vh;
-            width: 260px;
-        }
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            }
+
+        .sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: white; /* default */
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.sidebar a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar a.active {
+    background: white;  
+    color: #1b3a4b; /* text turns dark when active */
+    font-weight: bold;
+}
+
 
         /* Sidebar title */
         .sidebar-title {
@@ -108,44 +131,44 @@
     <!-- NAV LINKS -->
     <nav class="nav flex-column">
         <a href="<?= base_url('dashboard') ?>" 
-           class="nav-link <?= ($activePage=='dashboard')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">dashboard</span>Dashboard
         </a>
 
         <a href="<?= base_url('users') ?>" 
-           class="nav-link <?= ($activePage=='users')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">group</span>Users
         </a>
 
         <a href="<?= base_url('equipment') ?>" 
-           class="nav-link <?= ($activePage=='equipment')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">inventory_2</span>Equipment
         </a>
 
         <a href="<?= base_url('borrowing') ?>" 
-           class="nav-link <?= ($activePage=='borrowing')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">assignment_return</span>Borrowing
         </a>
 
         <a href="<?= base_url('returning') ?>" 
-           class="nav-link <?= ($activePage=='returning')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">assignment_turned_in</span>Returning
         </a>
 
         <a href="<?= base_url('reserving') ?>" 
-           class="nav-link <?= ($activePage=='reserving')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">event_available</span>Reserving
         </a>
 
         <a href="<?= base_url('reports') ?>" 
-           class="nav-link <?= ($activePage=='reports')?'nav-active':'nav-inactive' ?>">
+           class="nav-link">
            <span class="material-symbols-outlined">bar_chart</span>Reports
         </a>
     </nav>
 
     <!-- LOGOUT BUTTON (bottom aligned) -->
     <div class="mt-auto">
-        <a href="<?= base_url('logout') ?>" class="btn logout-btn w-100 mt-3 d-flex align-items-center justify-content-center">
+        <a href="<?= base_url('auth/logout') ?>" class="btn logout-btn w-100 mt-3 d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined me-1">logout</span>
             Logout
         </a>
