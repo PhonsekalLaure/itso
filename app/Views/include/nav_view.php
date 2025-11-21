@@ -1,39 +1,154 @@
-<nav class="navbar navbar-expand-lg navbar-sisig shadow-sm">
-    <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="<?= base_url(); ?>">
-            <img src="<?= base_url('public/assets/images/logo.png'); ?>" alt="Logo" width="40" height="40"
-                class="sisig-logo me-2">
-            <span class="sisig-title">Aling Basyang Sisigan</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active d-flex align-items-center" aria-current="page"
-                        href="<?= base_url('users') ?>">
-                        <i class="bi bi-people-fill me-1"></i> Users List
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center" href="<?= base_url('products') ?>">
-                        <i class="bi bi-basket2-fill me-1"></i> Products
-                    </a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <a class="nav-link d-flex align-items-center" href="<?= base_url('auth/logout') ?>">
-                    <span class="material-symbols-outlined">
-                        logout
-                    </span>
-                    Logout
-                </a>
-            </form>
-        </div>
+    <style>
+        /* Sidebar gradient */
+        .sidebar {
+            background: linear-gradient(to bottom, #0b824a, #fabc15);
+            min-height: 100vh;
+            width: 260px;
+        }
+
+        /* Sidebar title */
+        .sidebar-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        /* Divider */
+        .sidebar-divider {
+            height: 1px;
+            width: 100%;
+            background-color: white;
+            margin: 10px 0;
+            opacity: 0.6;
+        }
+
+        /* Nav buttons */
+        .sidebar .nav-link {
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+        }
+
+        /* Active */
+        .nav-active {
+            background-color: #fabc15 !important;
+            color: white !important;
+        }
+
+        /* Inactive */
+        .nav-inactive {
+            background-color: white !important;
+            color: black !important;
+        }
+
+        /* Logout button */
+        .logout-btn {
+            background-color: rgba(255,255,255,0.85);
+            color: black;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .logout-btn:hover {
+            background-color: white;
+        }
+
+        /* Responsive: Sidebar collapses */
+        @media(max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                z-index: 2000;
+                transform: translateX(-260px);
+                transition: 0.3s ease;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        /* Toggle button */
+        .sidebar-toggle-btn {
+            display: none;
+        }
+
+        @media(max-width: 992px) {
+            .sidebar-toggle-btn {
+                display: block;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                z-index: 2100;
+                background-color: #0b824a;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+        }
+    </style>
+
+<!-- Mobile toggle button -->
+<button class="sidebar-toggle-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+    <span class="material-symbols-outlined">menu</span>
+</button>
+
+<div class="sidebar d-flex flex-column p-3">
+    
+    <!-- Logo + System Name -->
+    <div class="text-center">
+        <img src="<?= base_url('public/assets/images/logo.png') ?>" width="80" class="mb-2" alt="Logo">
+        <div class="sidebar-title">ITSO Equipment<br>Management System</div>
     </div>
-</nav>
-<!-- Add Bootstrap Icons CDN and Google Fonts in your main layout if not yet included -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"> -->
-<!-- <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> -->
+
+    <div class="sidebar-divider"></div>
+
+    <!-- NAV LINKS -->
+    <nav class="nav flex-column">
+        <a href="<?= base_url('dashboard') ?>" 
+           class="nav-link <?= ($activePage=='dashboard')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">dashboard</span>Dashboard
+        </a>
+
+        <a href="<?= base_url('users') ?>" 
+           class="nav-link <?= ($activePage=='users')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">group</span>Users
+        </a>
+
+        <a href="<?= base_url('equipment') ?>" 
+           class="nav-link <?= ($activePage=='equipment')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">inventory_2</span>Equipment
+        </a>
+
+        <a href="<?= base_url('borrowing') ?>" 
+           class="nav-link <?= ($activePage=='borrowing')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">assignment_return</span>Borrowing
+        </a>
+
+        <a href="<?= base_url('returning') ?>" 
+           class="nav-link <?= ($activePage=='returning')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">assignment_turned_in</span>Returning
+        </a>
+
+        <a href="<?= base_url('reserving') ?>" 
+           class="nav-link <?= ($activePage=='reserving')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">event_available</span>Reserving
+        </a>
+
+        <a href="<?= base_url('reports') ?>" 
+           class="nav-link <?= ($activePage=='reports')?'nav-active':'nav-inactive' ?>">
+           <span class="material-symbols-outlined">bar_chart</span>Reports
+        </a>
+    </nav>
+
+    <!-- LOGOUT BUTTON (bottom aligned) -->
+    <div class="mt-auto">
+        <a href="<?= base_url('logout') ?>" class="btn logout-btn w-100 mt-3 d-flex align-items-center justify-content-center">
+            <span class="material-symbols-outlined me-1">logout</span>
+            Logout
+        </a>
+    </div>
+
+</div>
