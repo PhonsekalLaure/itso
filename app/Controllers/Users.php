@@ -41,7 +41,7 @@ class Users extends BaseController {
             'fullname' => $this->request->getPost('fullname'),
             'email' => $this->request->getPost('email'),
             'password' => $this->request->getPost('password'),
-            'is_deleted' => 0,
+            'is_deactivated' => 0,
         ];
 
         $usermodel->insert($data);
@@ -88,17 +88,21 @@ class Users extends BaseController {
         return redirect()->to('users');
     }
 
-    public function delete($id) {
-        $usermodel = model('Users_model');
+  public function delete($id)
+{
+    $usermodel = model('Users_model');
 
-        $data = [
-            'is_deleted' => 1,
-        ];
-
-        $usermodel->update($id, $data);
-
-        return redirect()->to('users');
+    // Make sure the user exists first
+    $user = $usermodel->find($id);
+    if (!$user) {
+        return redirect()->to('users')->with('error', 'User not found.');
     }
+
+    // Soft delete
+    $usermodel->update($id, ['is_deactivated' => 1]);
+
+    return redirect()->to('users')->with('success', 'User deleted successfully.');
+}
         
 }
 ?>
