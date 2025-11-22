@@ -9,7 +9,7 @@ use CodeIgniter\Debug\Toolbar\Collectors\Files;
 use CodeIgniter\Debug\Toolbar\Collectors\Logs;
 use CodeIgniter\Debug\Toolbar\Collectors\Routes;
 use CodeIgniter\Debug\Toolbar\Collectors\Timers;
-use CodeIgniter\Debug\Toolbar\Collectors\Views;
+// use CodeIgniter\Debug\Toolbar\Collectors\Views;
 
 /**
  * --------------------------------------------------------------------------
@@ -37,7 +37,7 @@ class Toolbar extends BaseConfig
         Timers::class,
         Database::class,
         Logs::class,
-        Views::class,
+       // Views::class,
         // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
         Files::class,
         Routes::class,
@@ -52,7 +52,7 @@ class Toolbar extends BaseConfig
      * If set to false var data from the views will not be collected. Useful to
      * avoid high memory usage when there are lots of data passed to the view.
      */
-    public bool $collectVarData = true;
+    public bool $collectVarData = false;
 
     /**
      * --------------------------------------------------------------------------
