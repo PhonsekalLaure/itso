@@ -55,14 +55,6 @@
                            placeholder="Enter total count" min="0" required>
                 </div>
                 
-                <div class="col-md-6">
-                    <label for="available_count" class="form-label fw-bold">
-                        <i class="bi bi-check-circle"></i> Available Count
-                    </label>
-                    <input type="number" class="form-control" id="available_count" name="available_count" 
-                           placeholder="Enter available count" min="0" required>
-                </div>
-                
                 <div class="col-12 text-end">
                     <button type="reset" class="btn btn-outline-secondary">
                         <i class="bi bi-x-circle"></i> Clear
@@ -99,13 +91,13 @@
                             <td><?= $eq['total_count'] ?? '' ?></td>
                             <td><?= $eq['available_count'] ?? '' ?></td>
                             <td class="text-end pe-3">
-                                <a href="<?= base_url('equipments/view/' . $eq['id']); ?>" class="btn btn-outline-success btn-sm me-1" title="View">
+                                <a href="<?= base_url('equipments/view/' . $eq['equipment_id']); ?>" class="btn btn-outline-success btn-sm me-1" title="View">
                                     <span class="material-symbols-outlined">visibility</span>
                                 </a>
-                                <a href="<?= base_url('equipments/edit/' . $eq['id']); ?>" class="btn btn-outline-warning btn-sm me-1" title="Edit">
+                                <a href="<?= base_url('equipments/edit/' . $eq['equipment_id']); ?>" class="btn btn-outline-warning btn-sm me-1" title="Edit">
                                     <span class="material-symbols-outlined">edit</span>
                                 </a>
-                                <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete" data-id="<?= $eq['id']; ?>" data-name="<?= htmlspecialchars($eq['name'] ?? 'equipment'); ?>">
+                                <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete" data-id="<?= $eq['equipment_id']; ?>" data-name="<?= htmlspecialchars($eq['name'] ?? 'equipment'); ?>">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a>
                             </td>

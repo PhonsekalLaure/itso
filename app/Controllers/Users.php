@@ -11,7 +11,7 @@ class Users extends BaseController {
 
 
         $data = array(
-            'title' => 'Users List',
+            'title' => 'Users Dashboard',
             'user' => session()->get('user'),
             'users' => $usermodel->where('is_deactivated', 0)->findAll()
         );

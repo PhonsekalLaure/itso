@@ -88,7 +88,6 @@
                 <thead>
                     <tr>
                         <th class="ps-4">Role</th>
-                        <th class="ps-3">Username</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
@@ -98,16 +97,7 @@
                 <tbody>
                     <?php foreach ($users as $user): ?>
                         <tr>
-                            <td class="ps-4">
-                                <?php
-                                if (strtolower($user['role']) == 'admin') {
-                                    echo "Administrator";
-                                } elseif (strtolower($user['role']) == 'sadmin') {
-                                    echo "Super Administrator";
-                                }
-                                ?>
-                            </td>
-                            <td class="ps-3"><?= $user['username'] ?></td>
+                            <td class="ps-4"><?= $user['role'] ?></td>
                             <td><?= $user['firstname'] ?></td>
                             <td><?= $user['lastname'] ?></td>
                             <td><?= $user['email'] ?></td>
@@ -122,7 +112,7 @@
                                 </a>
                                 <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
                                     data-id="<?= $user['user_id']; ?>"
-                                    data-name="<?= htmlspecialchars($user['username']); ?>">
+                                    data-name="<?= htmlspecialchars($user['firstname']); ?>">
                                     <span class="material-symbols-outlined">delete</span>
                                 </a>
                             </td>
