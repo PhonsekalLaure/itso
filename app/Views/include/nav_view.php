@@ -31,11 +31,11 @@
             <span class="material-symbols-outlined">assignment_return</span>Borrowing
         </a>
 
-        <a href="<?= base_url('returning') ?>" class="nav-link">
+        <a href="<?= base_url('returns') ?>" class="nav-link">
             <span class="material-symbols-outlined">assignment_turned_in</span>Returning
         </a>
 
-        <a href="<?= base_url('reserving') ?>" class="nav-link">
+        <a href="<?= base_url('reservations') ?>" class="nav-link">
             <span class="material-symbols-outlined">event_available</span>Reserving
         </a>
 

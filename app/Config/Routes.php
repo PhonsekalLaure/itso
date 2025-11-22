@@ -22,16 +22,20 @@ $routes->post('auth/reset/(:num)', 'Auth::reset/$1');
 // Routes for dashboard controller
 $routes->get('dashboard', 'Index::index');
 
-
 // Routes for Users controller
 $routes->get('users', 'Users::index');
-
 
 // Routes for Equipments controller
 $routes->get('equipments', 'Equipments::index');
 
 // Routes for Borrows controller
 $routes->get('borrows', 'Borrows::index');
+
+// Routes for Returns controller
+$routes->get('returns', 'Returns::index');
+
+// Routes for Reservations controller
+$routes->get('reservations', 'Reservations::index');
 
 
 

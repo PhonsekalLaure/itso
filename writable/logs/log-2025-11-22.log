@@ -1638,3 +1638,36 @@ DEBUG - 2025-11-22 15:49:07 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2025-11-22 15:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-11-22 15:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-11-22 15:49:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-22 16:00:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-22 16:00:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-11-22 16:00:13 --> ErrorException: Undefined variable $reservations
+[Method: GET, Route: reservations]
+in APPPATH\Views\reservations\reservations_dashboard.php on line 143.
+ 1 APPPATH\Views\reservations\reservations_dashboard.php(143): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $reservations', 'C:\\xampp\\htdocs\\itso\\app\\Views\\reservations\\reservations_dashboard.php', 143)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\itso\\app\\Views\\reservations\\reservations_dashboard.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():223}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('reservations\\reservations_dashboard', [], true)
+ 5 APPPATH\Controllers\Reservations.php(20): view('reservations\\reservations_dashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Reservations->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Reservations))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-11-22 16:00:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-22 16:00:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-11-22 16:00:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-11-22 16:00:17 --> ErrorException: Undefined variable $active_borrows
+[Method: GET, Route: returns]
+in APPPATH\Views\returns\returns_dashboard.php on line 40.
+ 1 APPPATH\Views\returns\returns_dashboard.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $active_borrows', 'C:\\xampp\\htdocs\\itso\\app\\Views\\returns\\returns_dashboard.php', 40)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\itso\\app\\Views\\returns\\returns_dashboard.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():223}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('returns\\returns_dashboard', [], true)
+ 5 APPPATH\Controllers\Returns.php(20): view('returns\\returns_dashboard', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Returns->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Returns))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
