@@ -14,8 +14,8 @@ $routes->post('auth/authenticate', 'Auth::authenticate');
 $routes->get('auth/logout', 'Auth::logout');
 
 
-// Routes for Home controller
-$routes->get('home', 'Index::index');
+// Routes for dashboard controller
+$routes->get('dashboard', 'Index::index');
 
 
 // Routes for Users controller
