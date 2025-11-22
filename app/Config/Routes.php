@@ -21,6 +21,16 @@ $routes->get('dashboard', 'Index::index');
 // Routes for Users controller
 $routes->get('users', 'Users::index');
 
+
+// Routes for Equipments controller
+$routes->get('equipments', 'Equipments::index');
+
+
+
+
+
+
+
 $routes->get('users/add', 'Users::add');
 $routes->post('users/insert', 'Users::insert');
 

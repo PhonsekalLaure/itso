@@ -23,7 +23,7 @@
             <span class="material-symbols-outlined">group</span>Users
         </a>
 
-        <a href="<?= base_url('equipment') ?>" class="nav-link">
+        <a href="<?= base_url('equipments') ?>" class="nav-link">
             <span class="material-symbols-outlined">inventory_2</span>Equipment
         </a>
 

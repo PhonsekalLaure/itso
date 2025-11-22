@@ -18,7 +18,7 @@ class Users extends BaseController {
 
         return view('include\head_view', $data)
             .view('include\nav_view')
-            .view('users\userslist_view', $data)
+            .view('users\users_dashboard', $data)
             .view('include\foot_view');
     }
 
