@@ -8,12 +8,11 @@ class Users extends BaseController {
         }
 
         $usermodel = model('Users_model');
-        $userId = session()->get('user')['user_id'];
-        $user = $usermodel->find($userId);
+
 
         $data = array(
             'title' => 'Users List',
-            'user' => $user,
+            'user' => session()->get('user'),
             'users' => $usermodel->where('is_deactivated', 0)->findAll()
         );
 

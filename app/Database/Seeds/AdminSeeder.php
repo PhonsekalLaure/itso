@@ -4,7 +4,7 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 
-class UserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     public function run()
     {
@@ -16,7 +16,6 @@ class UserSeeder extends Seeder
                 'lastname' => 'Pork',
                 'email' => 'admin@itso.com',
                 'role' => 'Admin',
-                'is_verified' => 1
             ],
             [
                 'username' => 'sixseven',
@@ -25,12 +24,11 @@ class UserSeeder extends Seeder
                 'lastname' => 'Seven',
                 'email' => 'sadmin@itso.com',
                 'role' => 'SAdmin',
-                'is_verified' => 1
             ],
         ];
 
-        $this->db->table('users')->insertBatch($data);
+        $this->db->table('admins')->insertBatch($data);
 
-        echo "Users seeded successfully.\n";
+        echo "Admins seeded successfully.\n";
     }
 }

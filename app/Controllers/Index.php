@@ -7,13 +7,8 @@ class Index extends BaseController {
             return redirect()->to(base_url('auth/login'));
         }
         // Use models for aggregated queries
-        $usermodel = model('Users_model');
-        $equipmentModel = model('Equipments_model');
+        $equipmentModel = model('Equipments_Model');
         $borrowModel = model('Borrows_Model');
-
-
-        $userId = session()->get('user')['user_id'];
-        $user = $usermodel->find($userId);
 
         // Total equipment: sum of `total_count` from `equipments`
         $row = $equipmentModel->select('SUM(total_count) AS total')->first();
@@ -39,7 +34,7 @@ class Index extends BaseController {
 
         $data = array(
             'title' => 'ITSO',
-            'user' => $user,
+            'user' => session()->get('user'),
             'total_equipment' => $total_equipment,
             'available_equipment' => $available_equipment,
             'borrowed_today' => $borrowed_today,

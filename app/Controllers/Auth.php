@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Admins_Model;
+
 class Auth extends BaseController
 {
 
@@ -21,14 +23,13 @@ class Auth extends BaseController
 
     public function authenticate()
     {
-        $usermodel = model('Users_model');
+        $adminmodel = model('Admins_Model');
 
         $username = strtolower(trim($this->request->getPost('username')));
         $password = $this->request->getPost('password');
 
-        $user = $usermodel->where('username', $username)
+        $user = $adminmodel->where('username', $username)
                           ->where('is_deactivated', 0)
-                          ->where('is_verified', 1)
                           ->whereIn('role', ['admin', 'sadmin'])
                           ->first();
 

@@ -3,22 +3,23 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Equipments_Model extends Model {
-    protected $table      = 'equipments';
+class Admins_Model extends Model {
+    protected $table      = 'admins';
 
-    protected $primaryKey = 'equipment_id';
+    protected $primaryKey = 'admin_id';
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
 
     protected $allowedFields = [
-        'name',
-        'description',
-        'total_count',
-        'available_count',
+        'role',
+        'username',
+        'password',
+        'firstname',
+        'lastname',
+        'email',
+        'date_created',
         'is_deactivated',
-        'date_added',
-        
     ];
 
     protected bool $allowEmptyInserts = false;
