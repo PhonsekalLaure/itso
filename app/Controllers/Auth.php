@@ -52,6 +52,31 @@ class Auth extends BaseController
             . view('include\foot_auth_view');
     }
 
+    public function reset_request(){
+        $adminmodel = model('Admin_Model');
+
+        $username = $this->request->getPost('username');
+        $user = $adminmodel->where('username', $username)
+                          ->where('is_deactivated', 0)
+                          ->whereIn('role', ['admin', 'sadmin'])
+                          ->first();
+
+        $message = "<h2>Hello, " . $user['firstname'] . ",</h2><br>
+            Reset your password <a href=".base_url('auth/reset/' . $user['id']) . ">here </a><br>From FEU Tech ITSO";
+
+    }
+    public function reset_page($id){
+        $data = array(
+            'title' => 'Reset Password',
+        );
+        return view('include\head_auth_view', $data)
+            . view('auth\reset_view')
+            . view('include\foot_auth_view');
+    }
+    public function reset($id) {
+        $adminmodel = model('Admin_Model');
+    }
+
     public function logout()
     {
         session()->destroy();

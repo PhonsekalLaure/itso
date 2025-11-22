@@ -9,8 +9,9 @@ use CodeIgniter\Router\RouteCollection;
 // Routes for Auth controller
 $routes->get('/', 'Auth::login');
 $routes->get('auth/login', 'Auth::login');
-$routes->get('auth/forgot', 'Auth::forgot');
 $routes->post('auth/authenticate', 'Auth::authenticate');
+$routes->get('auth/forgot', 'Auth::forgot');
+$routes->post('auth/reset-request', 'Auth::reset_request');
 $routes->get('auth/logout', 'Auth::logout');
 
 
