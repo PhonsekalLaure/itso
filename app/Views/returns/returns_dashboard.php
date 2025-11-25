@@ -56,35 +56,6 @@
                     <input type="datetime-local" class="form-control" id="return_date" name="return_date" required>
                 </div>
                 
-                <div class="col-md-6">
-                    <label for="condition_status" class="form-label fw-bold">
-                        <i class="bi bi-clipboard-check"></i> Condition Status
-                    </label>
-                    <select class="form-control" id="condition_status" name="condition_status" required>
-                        <option value="" disabled selected>Select condition</option>
-                        <option value="good">Good - No damage</option>
-                        <option value="damaged">Damaged - Minor issues</option>
-                        <option value="broken">Broken - Major issues</option>
-                        <option value="lost">Lost - Equipment missing</option>
-                    </select>
-                </div>
-                
-                <div class="col-md-6">
-                    <label for="penalty_amount" class="form-label fw-bold">
-                        <i class="bi bi-cash"></i> Penalty Amount (₱)
-                    </label>
-                    <input type="number" class="form-control" id="penalty_amount" name="penalty_amount" 
-                           placeholder="Enter penalty (if any)" min="0" step="0.01" value="0">
-                </div>
-                
-                <div class="col-12">
-                    <label for="remarks" class="form-label fw-bold">
-                        <i class="bi bi-card-text"></i> Remarks
-                    </label>
-                    <textarea class="form-control" id="remarks" name="remarks" rows="2" 
-                              placeholder="Enter any remarks about the return"></textarea>
-                </div>
-                
                 <!-- Display borrow details -->
                 <div class="col-12" id="borrowDetails" style="display: none;">
                     <div class="alert alert-info">
@@ -121,8 +92,6 @@
                         <th>Equipment</th>
                         <th>Quantity</th>
                         <th>Return Date</th>
-                        <th>Condition</th>
-                        <th>Penalty</th>
                         <th class="text-start pe-3" style="width: 150px;">Actions</th>
                     </tr>
                 </thead>
@@ -133,29 +102,6 @@
                             <td><?= $return['equipment_name'] ?? 'N/A' ?></td>
                             <td><?= $return['quantity'] ?? '0' ?></td>
                             <td><?= date('M d, Y h:i A', strtotime($return['return_date'])) ?></td>
-                            <td>
-                                <?php 
-                                $condition = strtolower($return['condition_status'] ?? 'good');
-                                $badgeClass = '';
-                                if ($condition == 'good') {
-                                    $badgeClass = 'bg-success';
-                                } elseif ($condition == 'damaged') {
-                                    $badgeClass = 'bg-warning text-dark';
-                                } elseif ($condition == 'broken') {
-                                    $badgeClass = 'bg-danger';
-                                } elseif ($condition == 'lost') {
-                                    $badgeClass = 'bg-dark';
-                                }
-                                ?>
-                                <span class="badge <?= $badgeClass ?>"><?= ucfirst($condition) ?></span>
-                            </td>
-                            <td>
-                                <?php if ($return['penalty_amount'] > 0): ?>
-                                    <span class="text-danger fw-bold">₱<?= number_format($return['penalty_amount'], 2) ?></span>
-                                <?php else: ?>
-                                    <span class="text-muted">₱0.00</span>
-                                <?php endif; ?>
-                            </td>
                             <td class="text-end pe-3">
                                 <a href="<?= base_url('returns/view/' . $return['return_id']); ?>" 
                                    class="btn btn-outline-success btn-sm me-1" title="View">

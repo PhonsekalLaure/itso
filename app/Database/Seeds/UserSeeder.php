@@ -14,32 +14,57 @@ class UserSeeder extends Seeder
 
         $users = [
             [
-                'role'           => 'associate',
-                'firstname'      => 'John',
-                'lastname'       => 'Cena',
-                'email'          => 'sadmin@example.com',
+                'role' => 'Associate',
+                'firstname' => 'Alice',
+                'lastname' => 'Smith',
+                'email' => 'alice.s@example.edu',
+                'date_added' => '2025-11-20 09:00:00',
+                'is_deactivated' => 0,
+                'is_verified' => 1,
             ],
             [
-                'role'           => 'student',
-                'firstname'      => 'Bong-Bong',
-                'lastname'       => 'Marcos',
-                'email'          => 'admin@example.com',
+                'user_id' => 2,
+                'role' => 'Student',
+                'firstname' => 'Bob',
+                'lastname' => 'Johnson',
+                'email' => 'bob.j@student.edu',
+                'date_added' => '2025-11-21 14:00:00',
+                'is_deactivated' => 0,
+                'is_verified' => 1,
             ],
             [
-                'role'           => 'associate',
-                'firstname'      => 'John',
-                'lastname'       => 'Doe',
-                'email'          => 'john.doe@example.com',
+                'user_id' => 3,
+                'role' => 'Student',
+                'firstname' => 'Charlie',
+                'lastname' => 'Brown',
+                'email' => 'charlie.b@student.edu',
+                'date_added' => '2025-11-21 16:30:00',
+                'is_deactivated' => 0,
+                'is_verified' => 1,
             ],
             [
-                'role'           => 'student',
-                'firstname'      => 'Alice',
-                'lastname'       => 'Smith',
-                'email'          => 'alice.smith@example.com',
+                'user_id' => 4,
+                'role' => 'Associate',
+                'firstname' => 'Dana',
+                'lastname' => 'White',
+                'email' => 'dana.w@example.edu',
+                'date_added' => '2025-11-22 08:00:00',
+                'is_deactivated' => 0,
+                'is_verified' => 1,
             ],
+            [
+                'user_id' => 5,
+                'role' => 'Student',
+                'firstname' => 'Eve',
+                'lastname' => 'Adams',
+                'email' => 'eve.a@student.edu',
+                'date_added' => '2025-11-23 10:15:00',
+                'is_deactivated' => 1, // Deactivated user
+                'is_verified' => 1,
+            ]
         ];
 
-        // Use the Users_Model for insertion to respect its configuration
+
         $usersModel = model('Users_Model');
         $usersModel->insertBatch($users);
     }

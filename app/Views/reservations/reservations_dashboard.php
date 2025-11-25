@@ -81,34 +81,6 @@
                     <input type="datetime-local" class="form-control" id="pickup_date" name="pickup_date" required>
                 </div>
                 
-                <div class="col-md-6">
-                    <label for="expected_return_date" class="form-label fw-bold">
-                        <i class="bi bi-calendar-event"></i> Expected Return
-                    </label>
-                    <input type="datetime-local" class="form-control" id="expected_return_date" name="expected_return_date" required>
-                </div>
-                
-                <div class="col-md-6">
-                    <label for="priority" class="form-label fw-bold">
-                        <i class="bi bi-flag"></i> Priority Level
-                    </label>
-                    <select class="form-control" id="priority" name="priority" required>
-                        <option value="" disabled selected>Select priority</option>
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
-                        <option value="urgent">Urgent</option>
-                    </select>
-                </div>
-                
-                <div class="col-12">
-                    <label for="purpose" class="form-label fw-bold">
-                        <i class="bi bi-card-text"></i> Purpose
-                    </label>
-                    <textarea class="form-control" id="purpose" name="purpose" rows="2" 
-                              placeholder="Enter purpose of reservation" required></textarea>
-                </div>
-                
                 <div class="col-12 text-end">
                     <button type="reset" class="btn btn-outline-secondary">
                         <i class="bi bi-x-circle"></i> Clear
@@ -134,7 +106,6 @@
                         <th>Equipment</th>
                         <th>Quantity</th>
                         <th>Pickup Date</th>
-                        <th>Priority</th>
                         <th>Status</th>
                         <th class="text-start pe-3" style="width: 210px;">Actions</th>
                     </tr>
@@ -146,22 +117,6 @@
                             <td><?= $reservation['equipment_name'] ?? 'N/A' ?></td>
                             <td><?= $reservation['quantity'] ?? '0' ?></td>
                             <td><?= date('M d, Y h:i A', strtotime($reservation['pickup_date'])) ?></td>
-                            <td>
-                                <?php 
-                                $priority = strtolower($reservation['priority'] ?? 'medium');
-                                $priorityClass = '';
-                                if ($priority == 'urgent') {
-                                    $priorityClass = 'bg-danger';
-                                } elseif ($priority == 'high') {
-                                    $priorityClass = 'bg-warning text-dark';
-                                } elseif ($priority == 'medium') {
-                                    $priorityClass = 'bg-info text-dark';
-                                } else {
-                                    $priorityClass = 'bg-secondary';
-                                }
-                                ?>
-                                <span class="badge <?= $priorityClass ?>"><?= ucfirst($priority) ?></span>
-                            </td>
                             <td>
                                 <?php 
                                 $status = strtolower($reservation['status'] ?? 'pending');

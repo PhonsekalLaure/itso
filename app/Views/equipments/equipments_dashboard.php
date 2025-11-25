@@ -78,6 +78,7 @@
                     <tr>
                         <th class="ps-4" style="width: 150px;">Name</th>
                         <th class="ps-3">Description</th>
+                        <th>Accessories</th>
                         <th>Total</th>
                         <th>Available</th>
                         <th class="text-start pe-3" style="width: 190px;">Actions</th>
@@ -88,6 +89,7 @@
                         <tr>
                             <td class="ps-3"><?= $eq['name'] ?? '' ?></td>
                             <td><?= $eq['description'] ?? '' ?></td>
+                            <td><?= $eq['accessories'] ?? '';?></td>
                             <td><?= $eq['total_count'] ?? '' ?></td>
                             <td><?= $eq['available_count'] ?? '' ?></td>
                             <td class="text-end pe-3">

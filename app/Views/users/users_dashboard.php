@@ -187,26 +187,17 @@
                 deleteModal.show();
             });
         });
-
-        // Password confirmation validation
-        var form = document.getElementById('addUserForm');
-        form.addEventListener('submit', function(e) {
-            var password = document.getElementById('password').value;
-            var confPassword = document.getElementById('confpassword').value;
-            
-            if (password !== confPassword) {
-                e.preventDefault();
-                alert('Passwords do not match!');
-                return false;
-            }
-        });
     });
+<<<<<<< HEAD
+
+=======
      var confirmAddBtn = document.getElementById('confirmAddBtn');
     var addUserForm = document.getElementById('addUserForm');
 
     confirmAddBtn.addEventListener('click', function() {
         addUserForm.submit(); // submit the form
     });
+>>>>>>> 2510c4aac042b8640805d21832eaa4df5d226e19
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 

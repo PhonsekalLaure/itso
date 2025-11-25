@@ -74,21 +74,6 @@
                     <input type="datetime-local" class="form-control" id="borrow_date" name="borrow_date" required>
                 </div>
                 
-                <div class="col-md-4">
-                    <label for="expected_return_date" class="form-label fw-bold">
-                        <i class="bi bi-calendar-event"></i> Expected Return
-                    </label>
-                    <input type="datetime-local" class="form-control" id="expected_return_date" name="expected_return_date" required>
-                </div>
-                
-                <div class="col-12">
-                    <label for="purpose" class="form-label fw-bold">
-                        <i class="bi bi-card-text"></i> Purpose
-                    </label>
-                    <textarea class="form-control" id="purpose" name="purpose" rows="2" 
-                              placeholder="Enter purpose of borrowing" required></textarea>
-                </div>
-                
                 <div class="col-12 text-end">
                     <button type="reset" class="btn btn-outline-secondary">
                         <i class="bi bi-x-circle"></i> Clear
@@ -114,7 +99,6 @@
                         <th>Equipment</th>
                         <th>Quantity</th>
                         <th>Borrow Date</th>
-                        <th>Expected Return</th>
                         <th>Status</th>
                         <th class="text-start pe-3" style="width: 190px;">Actions</th>
                     </tr>
@@ -126,7 +110,6 @@
                             <td><?= $borrow['equipment_name'] ?? 'N/A' ?></td>
                             <td><?= $borrow['quantity'] ?? '0' ?></td>
                             <td><?= date('M d, Y h:i A', strtotime($borrow['borrow_date'])) ?></td>
-                            <td><?= date('M d, Y h:i A', strtotime($borrow['expected_return_date'])) ?></td>
                             <td>
                                 <?php 
                                 $status = strtolower($borrow['status'] ?? 'pending');

@@ -16,6 +16,7 @@ class Borrows_Model extends Model {
         'equipment_id',
         'quantity',
         'borrow_date',
+        'return_date',
         'status',
         
     ];

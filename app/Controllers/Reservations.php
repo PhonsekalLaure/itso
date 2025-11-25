@@ -12,7 +12,7 @@ class Reservations extends BaseController {
             'user' => session()->get('user'),
             'users'=> [],
             'equipments' => [],
-            'borrows'=> [],
+            'reservations'=> [],
         );
 
         return view('include\head_view', $data)

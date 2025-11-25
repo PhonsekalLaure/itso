@@ -14,6 +14,7 @@ class Equipments_Model extends Model {
     protected $allowedFields = [
         'name',
         'description',
+        'accessories',
         'total_count',
         'available_count',
         'is_deactivated',
