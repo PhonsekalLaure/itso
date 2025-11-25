@@ -3,9 +3,11 @@ namespace App\Controllers;
 
 use App\Models\Users_Model;
 
-class Users extends BaseController {
+class Users extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         if (!session()->get('user')) {
             return redirect()->to(base_url('auth/login'));
         }
@@ -15,46 +17,84 @@ class Users extends BaseController {
         $data = [
             'title' => 'Users Dashboard',
             'user' => session()->get('user'),
-            'users' => $usermodel->where('is_deactivated', 0)->findAll()
+            'users' => $usermodel->where('is_deactivated', 0)
+                                ->where('is_verified', 1)
+                                ->orderBy('role','ASC')
+                                ->findAll()
         ];
 
         return view('include/head_view', $data)
-            .view('include/nav_view')
-            .view('users/users_dashboard', $data)
-            .view('include/foot_view');
+            . view('include/nav_view')
+            . view('users/users_dashboard', $data)
+            . view('include/foot_view');
     }
 
-    public function add() {
-        $data = [
-            'title' => 'Add User',
-        ];
-        return view('include/head_view', $data)
-            .view('include/nav_view')
-            .view('users/add_view')
-            .view('include/foot_view');
-    }
-
-    public function insert() {
+    public function insert()
+    {
         $usermodel = new Users_Model();
+        $validation = service('validation');
 
         $data = [
-            'role' => $this->request->getPost('acctype'),
             'firstname' => $this->request->getPost('firstname'),
-            'lastname'  => $this->request->getPost('lastname'),
-            'email'     => $this->request->getPost('email'),
-            'password'  => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'is_deactivated' => 0,
-            'is_verified'    => 0,
-            'date_added'     => date('Y-m-d H:i:s')
+            'lastname' => $this->request->getPost('lastname'),
+            'email' => $this->request->getPost('email'),
+            'role' => $this->request->getPost('acctype'),
         ];
 
-        $usermodel->insert($data);
+        // Runs the validation
+        if (!$validation->run($data, 'create_user')) {
+            // If validation fails, redirect back to the users page with errors and old input
+            $errors = $validation->getErrors();
+            return redirect()->to('users')->withInput()->with('errors', $errors);
+        }
+
+        $data_insert = [
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'role' => $data['role'],
+            'is_deactivated' => 0,
+            'is_verified' => 0,
+            'token' => bin2hex(random_bytes(16)),
+        ];
+
+        $message = "<h2>Hello " . $data['firstname'] . ",</h2><br>
+            Click <a href=" . base_url('users/verify/' . $data_insert['token']) . ">here</a> to verify your Account.<br>From FEU Tech ITSO";
+
+        $email = service('email');
+        $email->setTo($data['email']);
+        $email->setSubject('EMAIL VERIFICATION');
+        $email->setMessage($message);
+        if (!$email->send()) {
+            echo "MAY PROBLEMA!";
+            return;
+        }
+
+
+        $usermodel->insert($data_insert);
 
         return redirect()->to('users')->with('success', 'User added successfully!');
     }
 
-    public function view($id) {
-        $usermodel = new Users_Model();
+    public function verify($token)
+    {
+        $usermodel = model('Users_Model');
+        $usermodel->where(['token' => $token]);
+        $user = $usermodel->first();
+        // dd($user);
+        if ($user) {
+            // dd($user);
+            $usermodel->update($user['user_id'], ['is_verified' => 1]);
+
+            // TODO: Create session to inform user that verification is successful, redirect(0)->to('user/login')
+
+            return redirect()->to('users')->with('success', 'User Account Verified.');
+        }
+    }
+
+    public function view($id)
+    {
+        $usermodel = model('Users_Model');
 
         $data = [
             'title' => 'View User',
@@ -62,32 +102,34 @@ class Users extends BaseController {
         ];
 
         return view('include/head_view', $data)
-            .view('include/nav_view')
-            .view('users/view_view', $data)
-            .view('include/foot_view');
+            . view('include/nav_view')
+            . view('users/view_view', $data)
+            . view('include/foot_view');
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $usermodel = new Users_Model();
 
         $data = [
             'title' => 'Edit User',
-            'user'  => $usermodel->find($id)
+            'user' => $usermodel->find($id)
         ];
 
         return view('include/head_view', $data)
-            .view('include/nav_view')
-            .view('users/edit_view', $data)
-            .view('include/foot_view');
+            . view('include/nav_view')
+            . view('users/edit_view', $data)
+            . view('include/foot_view');
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         $usermodel = new Users_Model();
 
         $data = [
             'firstname' => $this->request->getPost('firstname'),
-            'lastname'  => $this->request->getPost('lastname'),
-            'email'     => $this->request->getPost('email'),
+            'lastname' => $this->request->getPost('lastname'),
+            'email' => $this->request->getPost('email'),
         ];
 
         // Only update password if provided
@@ -101,7 +143,8 @@ class Users extends BaseController {
         return redirect()->to('users')->with('success', 'User updated successfully!');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $usermodel = new Users_Model();
 
         $user = $usermodel->find($id);

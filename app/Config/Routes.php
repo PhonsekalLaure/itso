@@ -24,6 +24,8 @@ $routes->get('dashboard', 'Index::index');
 
 // Routes for Users controller
 $routes->get('users', 'Users::index');
+$routes->post('users/insert', 'Users::insert');
+$routes->get('users/verify/(:segment)', 'Users::verify/$1');
 
 // Routes for Equipments controller
 $routes->get('equipments', 'Equipments::index');
@@ -44,7 +46,7 @@ $routes->get('reservations', 'Reservations::index');
 
 
 $routes->get('users/add', 'Users::add');
-$routes->post('users/insert', 'Users::insert');
+
 
 $routes->get('users/view/(:num)', 'Users::view/$1');
 

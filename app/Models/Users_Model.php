@@ -18,7 +18,8 @@ class Users_Model extends Model {
         'email',
         'date_added',
         'is_deactivated',
-        'is_verified'
+        'is_verified',
+        'token',
     ];
 
     protected bool $allowEmptyInserts = false;

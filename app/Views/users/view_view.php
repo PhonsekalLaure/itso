@@ -19,27 +19,27 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="username" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
+                        <label for="firstname" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 28px;">
                                 account_circle
                             </span>
-                            Username
+                            First Name
                         </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username" name="username" readonly
-                                value="<?= $user['username']; ?>">
+                            <input type="text" class="form-control" id="firstname" name="firstname" readonly
+                                value="<?= $user['firstname']; ?>">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="fullname" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
+                        <label for="lastname" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 28px;">
                                 description
                             </span>
-                            Full name
+                            Last Name
                         </label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="fullname" name="fullname" readonly
-                                value="<?= $user['fullname']; ?>">
+                            <input type="text" class="form-control" id="lastname" name="lastname" readonly
+                                value="<?= $user['lastname']; ?>">
                         </div>
                     </div>
                     <div class="mb-3 row">

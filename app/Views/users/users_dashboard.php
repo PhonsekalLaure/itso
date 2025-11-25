@@ -28,40 +28,50 @@
         <div class="section-title mb-3 d-flex align-items-center gap-2">
             <i class="bi bi-plus-circle"></i> NEW USER
         </div>
-        <?php if(isset($validation)): ?>
-    <div class="alert alert-danger">
-        <?= $validation->listErrors() ?>
-    </div>
-<?php endif; ?>
+        <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle"></i> <?= esc(session()->getFlashdata('success')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+        
+        <?php if (session()->getFlashdata('errors')): ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach (session()->getFlashdata('errors') as $err): ?>
+                        <li><?= esc($err) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-        <form action="<?= base_url('users/insert'); ?>" method="post" id="addUserForm"
-      onsubmit="return confirm('Are you sure you want to create this user?');">
+        <form action="<?= base_url('users/insert'); ?>" method="post" id="addUserForm">
 
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="firstname" class="form-label fw-bold">
                         <i class="bi bi-person"></i> First Name
                     </label>
-                    <input type="text" class="form-control" id="firstname" name="firstname" 
-                           placeholder="Enter First Name" required>
+                    <input type="text" class="form-control" id="firstname" name="firstname"
+                        placeholder="Enter First Name" value="<?= set_value('firstname') ?>" required>
                 </div>
 
                 <div class="col-md-6">
                     <label for="lastname" class="form-label fw-bold">
                         <i class="bi bi-person"></i> Last Name
                     </label>
-                    <input type="text" class="form-control" id="lastname" name="lastname" 
-                           placeholder="Enter Last Name" required>
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Last Name"
+                        value="<?= set_value('lastname') ?>" required>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label for="email" class="form-label fw-bold">
                         <i class="bi bi-envelope"></i> Email
                     </label>
-                    <input type="email" class="form-control" id="email" name="email" 
-                           placeholder="Enter email" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"
+                        value="<?= set_value('email') ?>" required>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label for="acctype" class="form-label fw-bold">
                         <i class="bi bi-lock-fill"></i> Account Type
@@ -72,16 +82,15 @@
                         <option value="associate">Student</option>
                     </select>
                 </div>
-                
+
                 <div class="col-12 text-end">
                     <button type="reset" class="btn btn-outline-secondary">
                         <i class="bi bi-x-circle"></i> Clear
                     </button>
-                  <button type="button" class="btn ms-2" 
-        style="background:#f4b029; color:#fff; font-weight:600;"
-        data-bs-toggle="modal" data-bs-target="#confirmAddModal">
-    <i class="bi bi-person-plus"></i> Add User
-</button>
+                    <button type="button" id="openConfirmAddModalBtn" class="btn ms-2"
+                        style="background:#f4b029; color:#fff; font-weight:600;">
+                        <i class="bi bi-person-plus"></i> Add User
+                    </button>
 
                 </div>
             </div>
@@ -135,21 +144,21 @@
 </div>
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmAddModal" tabindex="-1" aria-labelledby="confirmAddModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmAddModalLabel">Confirm Add User</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to create this user?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" id="confirmAddBtn" class="btn btn-warning">Yes, Add User</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmAddModalLabel">Confirm Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to create this user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="confirmAddBtn" class="btn btn-warning">Yes, Add User</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -187,17 +196,32 @@
                 deleteModal.show();
             });
         });
-    });
-<<<<<<< HEAD
 
-=======
-     var confirmAddBtn = document.getElementById('confirmAddBtn');
-    var addUserForm = document.getElementById('addUserForm');
+        // Add User confirmation flow with validation
+        var addUserForm = document.getElementById('addUserForm');
+        var confirmAddModalEl = document.getElementById('confirmAddModal');
+        var confirmAddModal = new bootstrap.Modal(confirmAddModalEl);
+        var openConfirmBtn = document.getElementById('openConfirmAddModalBtn');
+        var confirmAddBtn = document.getElementById('confirmAddBtn');
 
-    confirmAddBtn.addEventListener('click', function() {
-        addUserForm.submit(); // submit the form
+        // Intercept Add User button: validate before showing modal
+        if (openConfirmBtn) {
+            openConfirmBtn.addEventListener('click', function () {
+                if (!addUserForm.checkValidity()) {
+                    addUserForm.reportValidity();
+                    return;
+                }
+                confirmAddModal.show();
+            });
+        }
+
+        // On confirm, submit the form
+        if (confirmAddBtn) {
+            confirmAddBtn.addEventListener('click', function () {
+                addUserForm.submit();
+            });
+        }
     });
->>>>>>> 2510c4aac042b8640805d21832eaa4df5d226e19
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
