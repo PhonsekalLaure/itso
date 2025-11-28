@@ -3,6 +3,15 @@
 </header>
 <main>
     <div class="col col-md-6 mx-auto">
+        <?php if (session()->getFlashdata('errors')): ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach (session()->getFlashdata('errors') as $err): ?>
+                        <li><?= esc($err) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="card shadow-sm mt-4">
             <div class="card-body">
                 <form action="<?= base_url("users/update/" . $user['user_id']); ?>" method="post"
@@ -48,7 +57,7 @@
                             <i class="bi bi-lock-fill"></i> Account Type
                         </label>
                         <select class="form-control" id="acctype" name="acctype" disabled required>
-                            <option value="" disabled selected><?= $user['role'];?></option>
+                            <option value="" disabled selected><?= $user['role']; ?></option>
                         </select>
                     </div>
                     <div class="d-flex justify-content-between mt-4">

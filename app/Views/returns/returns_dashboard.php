@@ -169,6 +169,24 @@
             document.getElementById('borrowDetails').style.display = 'block';
         });
 
+        // If server provided a prefill borrow id, select it and trigger change
+        <?php if (!empty($prefill_borrow_id)): ?>
+        (function() {
+            var pre = '<?= esc($prefill_borrow_id) ?>';
+            var sel = document.getElementById('borrow_id');
+            if (sel) {
+                // Wait a tick to ensure options are populated
+                setTimeout(function() {
+                    sel.value = pre;
+                    sel.dispatchEvent(new Event('change'));
+                    // Scroll to the form so the user sees it
+                    var formTop = document.getElementById('borrowDetails');
+                    if (formTop) formTop.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+            }
+        })();
+        <?php endif; ?>
+
         // Auto-suggest penalty based on condition
         document.getElementById('condition_status').addEventListener('change', function() {
             var condition = this.value;

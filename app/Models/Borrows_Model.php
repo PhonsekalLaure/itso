@@ -18,6 +18,7 @@ class Borrows_Model extends Model {
         'borrow_date',
         'return_date',
         'status',
+        'is_deleted',
         
     ];
 

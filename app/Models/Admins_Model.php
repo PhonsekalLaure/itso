@@ -20,6 +20,7 @@ class Admins_Model extends Model {
         'email',
         'date_created',
         'is_deactivated',
+        'token',
     ];
 
     protected bool $allowEmptyInserts = false;

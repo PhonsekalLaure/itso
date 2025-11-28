@@ -25,15 +25,22 @@ class Auth extends BaseController
     {
         $adminmodel = model('Admins_Model');
 
-        $username = strtolower(trim($this->request->getPost('username')));
-        $password = $this->request->getPost('password');
+        $data = [
+            'username' => strtolower(trim($this->request->getPost('username'))),
+            'password' => $this->request->getPost('password'),
+        ];
 
-        $admin = $adminmodel->where('username', $username)
+        $admin = $adminmodel->where('username', $data['username'])
             ->where('is_deactivated', 0)
             ->whereIn('role', ['admin', 'sadmin'])
             ->first();
 
-        if ($admin && password_verify($password, $admin['password'])) {
+        if (!$admin) {
+            session()->setFlashdata('error', 'Invalid username or password.');
+            return redirect()->back()->withInput();
+        }
+
+        if ($admin && password_verify($data['password'], $admin['password'])) {
             session()->set(['admin' => $admin]);
             return redirect()->to(base_url('dashboard'));
         } else {
@@ -72,7 +79,7 @@ class Auth extends BaseController
         }
 
         $message = "<h2>Hello " . $admin['firstname'] . ",</h2><br>
-            Reset your password <a href=" . base_url('auth/reset/' . $admin['admin_id']) . ">here</a>.<br>From FEU Tech ITSO";
+            Reset your password <a href=" . base_url('auth/reset/' . $admin['token']) . ">here</a>.<br>From FEU Tech ITSO";
 
         $email = service('email');
         $email->setTo($admin['email']);
@@ -80,51 +87,69 @@ class Auth extends BaseController
         $email->setMessage($message);
 
         if (!$email->send()) {
-            echo "MAY PROBLEMA!";
-            return;
+            return redirect()->back()->withInput()->with('errors', $email->printDebugger());
         }
         return redirect()->to('/');
 
     }
-    public function reset_page($id)
+    public function reset_page($token)
     {
         if (session()->get('admin')) {
             return redirect()->to(base_url('dashboard'));
         }
         $data = array(
             'title' => 'Reset Password',
-            'admin_id' => $id
+            'token' => $token
         );
         return view('include\head_auth_view', $data)
             . view('auth\reset_view', $data)
             . view('include\foot_auth_view');
     }
 
-    public function reset($id)
+    public function reset($token)
     {
         $adminmodel = model('Admins_Model');
+        $validation = service('validation');
 
-        $password = (string) $this->request->getPost('password');
-        $confirm_password = (string) $this->request->getPost('confirm_password');
+        $data = [
+            'password' => (string) $this->request->getPost('password'),
+            'confirm_password' => (string) $this->request->getPost('confirm_password'),
+        ];
+
+        $admin = $adminmodel->where('token', $token)
+            ->where('is_deactivated', 0)
+            ->whereIn('role', ['admin', 'sadmin'])
+            ->first();
+
+        if (!$admin) {
+            return redirect()->to('auth/login')->with('error', 'Invalid or expired token.');
+        }
+
+        if (!$validation->run($data, 'reset')) {
+            // If validation fails, redirect back to the reset page with errors and old input
+            $errors = $validation->getErrors();
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $password = $data['password'];
+        $confirm_password = $data['confirm_password'];
 
         if (empty($password) || empty($confirm_password)) {
-            session()->setFlashdata('error', 'All fields are required.');
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error', 'All fields are required.');
         }
 
         if ($password !== $confirm_password) {
-            session()->setFlashdata('error', 'Passwords do not match.');
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error', 'Passwords do not match.');
         }
 
-        $updated = $adminmodel->update($id, ['password' => password_hash($password, PASSWORD_DEFAULT)]);
+        $updated = $adminmodel->update($admin['admin_id'], [
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'token' => bin2hex(random_bytes(16))
+        ]);
         if (!$updated) {
-            session()->setFlashdata('error', 'Failed to reset password.');
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('error', 'Failed to reset password.');
         }
-
-        session()->setFlashdata('message', 'Password has been reset. You can now sign in.');
-        return redirect()->to(base_url('auth/login'));
+        return redirect()->to(base_url('auth/login'))->with('success', 'Password has been reset. You can now sign in.');
     }
 
     public function logout()

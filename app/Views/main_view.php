@@ -9,14 +9,13 @@
             <div>
                 <b><?= $admin['firstname'] . " " . $admin['lastname']; ?></b><br>
                 <small>
-                <?php
-                    if(strtolower($admin['role']) == 'admin'){
+                    <?php
+                    if (strtolower($admin['role']) == 'admin') {
                         echo "Administrator";
-                    }
-                    elseif(strtolower($admin['role']) == 'sadmin'){
+                    } elseif (strtolower($admin['role']) == 'sadmin') {
                         echo "Super Administrator";
                     }
-                ?>
+                    ?>
                 </small><br>
                 <small>Current time: <?= date("M d, Y h:i A", strtotime("+8 hours")); ?></small>
             </div>
@@ -92,10 +91,11 @@
                 <div class="section-title">
                     <i class="bi bi-lightning-fill"></i> Quick Actions
                 </div>
-
-                <button class="quick-btn" onclick="window.location.href='<?= site_url('equipment/add') ?>'">
-                    <i class="bi bi-plus-circle"></i> Add Equipment
-                </button>
+                <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
+                    <button class="quick-btn" onclick="window.location.href='<?= site_url('equipment/add') ?>'">
+                        <i class="bi bi-plus-circle"></i> Add Equipment
+                    </button>
+                <?php endif; ?>
 
                 <button class="quick-btn" onclick="window.location.href='<?= site_url('borrow') ?>'">
                     <i class="bi bi-cart-fill"></i> Process Borrowing

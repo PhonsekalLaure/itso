@@ -16,6 +16,7 @@ class AdminSeeder extends Seeder
                 'lastname' => 'Pork',
                 'email' => 'admin@itso.com',
                 'role' => 'Admin',
+                'token' => bin2hex(random_bytes(16))
             ],
             [
                 'username' => 'sixseven',
@@ -24,6 +25,7 @@ class AdminSeeder extends Seeder
                 'lastname' => 'Seven',
                 'email' => 'sadmin@itso.com',
                 'role' => 'SAdmin',
+                'token' => bin2hex(random_bytes(16))
             ],
         ];
 

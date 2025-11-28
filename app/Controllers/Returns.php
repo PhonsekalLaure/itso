@@ -14,6 +14,8 @@ class Returns extends BaseController {
             ->select('borrows.*, users.firstname AS borrower_firstname, users.lastname AS borrower_lastname, equipments.name AS equipment_name')
             ->join('users', 'users.user_id = borrows.user_id')
             ->join('equipments', 'equipments.equipment_id = borrows.equipment_id')
+            ->where('borrows.is_deleted', 0)
+            ->where('users.is_deactivated', 0)
             ->where('borrows.status !=', 'returned')
             ->orderBy('borrow_date', 'DESC')
             ->findAll();
@@ -47,11 +49,15 @@ class Returns extends BaseController {
         }
         unset($r);
 
+        // If a borrow_id is provided via query string, pass it to the view to pre-select
+        $prefillBorrowId = $this->request->getGet('borrow_id');
+
         $data = array(
             'title' => 'Returning Dashboard',
             'admin' => session()->get('admin'),
             'active_borrows'=> $active_borrows,
             'returns'=> $returns,
+            'prefill_borrow_id' => $prefillBorrowId,
         );
 
         return view('include\head_view', $data)

@@ -27,7 +27,28 @@
         <div class="section-title mb-3 d-flex align-items-center gap-2">
             <i class="bi bi-plus-circle"></i> NEW BORROW
         </div>
-        
+
+        <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle"></i> <?= esc(session()->getFlashdata('success')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-circle"></i> <?= esc(session()->getFlashdata('error')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('info')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-circle"></i> <?= esc(session()->getFlashdata('info')) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
         <form action="<?= base_url('borrows/insert'); ?>" method="post" id="addBorrowForm">
             <div class="row g-3">
                 <div class="col-md-6">
@@ -43,7 +64,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label for="equipment_id" class="form-label fw-bold">
                         <i class="bi bi-box-seam"></i> Equipment
@@ -57,28 +78,27 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                
+
                 <div class="col-md-4">
                     <label for="quantity" class="form-label fw-bold">
                         <i class="bi bi-calculator"></i> Quantity
                     </label>
-                    <input type="number" class="form-control" id="quantity" name="quantity" 
-                           placeholder="Enter quantity" min="1" required>
+                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity"
+                        min="1" required>
                 </div>
-                
+
                 <div class="col-md-4">
                     <label for="borrow_date" class="form-label fw-bold">
                         <i class="bi bi-calendar-check"></i> Borrow Date
                     </label>
                     <input type="datetime-local" class="form-control" id="borrow_date" name="borrow_date" required>
                 </div>
-                
+
                 <div class="col-12 text-end">
                     <button type="reset" class="btn btn-outline-secondary">
                         <i class="bi bi-x-circle"></i> Clear
                     </button>
-                    <button type="submit" class="btn ms-2" 
-                            style="background:#f4b029; color:#fff; font-weight:600;">
+                    <button type="submit" class="btn ms-2" style="background:#f4b029; color:#fff; font-weight:600;">
                         <i class="bi bi-plus-lg"></i> Add Borrow
                     </button>
                 </div>
@@ -110,7 +130,7 @@
                             <td><?= $borrow['quantity'] ?? '0' ?></td>
                             <td><?= date('M d, Y h:i A', strtotime($borrow['borrow_date'])) ?></td>
                             <td>
-                                <?php 
+                                <?php
                                 $status = strtolower($borrow['status'] ?? 'pending');
                                 $badgeClass = '';
                                 if ($status == 'borrowed') {
@@ -124,23 +144,24 @@
                                 <span class="badge <?= $badgeClass ?>"><?= ucfirst($status) ?></span>
                             </td>
                             <td class="text-end pe-3">
-                                <a href="<?= base_url('borrows/view/' . $borrow['borrow_id']); ?>" 
-                                   class="btn btn-outline-success btn-sm me-1" title="View">
+                                <a href="<?= base_url('borrows/view/' . $borrow['borrow_id']); ?>"
+                                    class="btn btn-outline-success btn-sm me-1" title="View">
                                     <span class="material-symbols-outlined">visibility</span>
                                 </a>
                                 <?php if ($status != 'returned'): ?>
-                                    <a href="#" class="btn btn-outline-primary btn-sm me-1 btn-return" 
-                                       title="Mark as Returned"
-                                       data-id="<?= $borrow['borrow_id']; ?>"
-                                       data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrower'); ?>">
+                                    <a href="<?= base_url('borrows/return/' . $borrow['borrow_id']); ?>" class="btn btn-outline-primary btn-sm me-1 btn-return" title="Mark as Returned"
+                                        data-id="<?= $borrow['borrow_id']; ?>"
+                                        data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrower'); ?>">
                                         <span class="material-symbols-outlined">assignment_return</span>
                                     </a>
                                 <?php endif; ?>
-                                <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete" 
-                                   data-id="<?= $borrow['borrow_id']; ?>"
-                                   data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrow record'); ?>">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a>
+                                <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
+                                    <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
+                                        data-id="<?= $borrow['borrow_id']; ?>"
+                                        data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrow record'); ?>">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -149,25 +170,6 @@
         </div>
     </div>
 
-</div>
-
-<!-- Return Confirmation Modal -->
-<div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="returnModalLabel">Mark as Returned</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to mark this borrow by <strong id="modalBorrowerName"></strong> as returned?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-primary" id="confirmReturnBtn">Mark as Returned</a>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Delete Confirmation Modal -->
@@ -197,20 +199,6 @@
         document.getElementById('borrow_date').value = now.toISOString().slice(0, 16);
 
         // Return modal functionality
-        var returnModal = new bootstrap.Modal(document.getElementById('returnModal'));
-        var confirmReturnBtn = document.getElementById('confirmReturnBtn');
-        var modalBorrowerName = document.getElementById('modalBorrowerName');
-
-        document.querySelectorAll('.btn-return').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                var borrowId = this.getAttribute('data-id');
-                var borrowerName = this.getAttribute('data-name');
-                modalBorrowerName.textContent = borrowerName;
-                confirmReturnBtn.href = "<?= base_url('borrows/return/') ?>" + borrowId;
-                returnModal.show();
-            });
-        });
 
         // Delete modal functionality
         var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
@@ -230,30 +218,21 @@
 
         // Form validation
         var form = document.getElementById('addBorrowForm');
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
             var equipmentSelect = document.getElementById('equipment_id');
             var selectedOption = equipmentSelect.options[equipmentSelect.selectedIndex];
             var availableCount = parseInt(selectedOption.getAttribute('data-available'));
             var quantity = parseInt(document.getElementById('quantity').value);
-            
+
             if (quantity > availableCount) {
                 e.preventDefault();
                 alert('Quantity cannot exceed available count (' + availableCount + ')!');
                 return false;
             }
-
-            var borrowDate = new Date(document.getElementById('borrow_date').value);
-            var returnDate = new Date(document.getElementById('expected_return_date').value);
-
-            if (returnDate <= borrowDate) {
-                e.preventDefault();
-                alert('Expected return date must be after borrow date!');
-                return false;
-            }
         });
 
         // Update quantity max based on selected equipment
-        document.getElementById('equipment_id').addEventListener('change', function() {
+        document.getElementById('equipment_id').addEventListener('change', function () {
             var selectedOption = this.options[this.selectedIndex];
             var availableCount = parseInt(selectedOption.getAttribute('data-available'));
             document.getElementById('quantity').setAttribute('max', availableCount);

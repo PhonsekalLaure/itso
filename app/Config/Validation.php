@@ -41,6 +41,32 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public array $login = [
+        'username' => 'required|min_length[3]|max_length[50]',
+        'password' => [
+            'rules' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/]',
+            'errors' => [
+                'regex_match' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol.',
+            ]
+        ],
+    ];
+
+    public array $reset = [
+        'password' => [
+            'rules' => 'required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/]',
+            'errors' => [
+                'regex_match' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one symbol.',
+            ]
+        ],
+        'confirm_password' => [
+            'rules' => 'matches[password]',
+            'errors' => [
+                'matches' => 'Password confirmation does not match the password.',
+            ]
+        ]
+    ];
+
     public array $create_user = [
         'firstname' => 'required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z][A-Za-z\' -]*$/]',
         'lastname' => 'required|min_length[2]|max_length[50]|regex_match[/^[A-Za-z][A-Za-z\' -]*$/]',
