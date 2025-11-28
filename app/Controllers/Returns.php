@@ -1,10 +1,12 @@
 <?php
 namespace App\Controllers;
 
-class Returns extends BaseController {
+class Returns extends BaseController
+{
 
     // Dashboard view
-    public function index() {
+    public function index()
+    {
         if (!session()->get('admin')) {
             return redirect()->to(base_url('auth/login'));
         }
@@ -27,6 +29,8 @@ class Returns extends BaseController {
             ->select('borrows.*, users.firstname AS borrower_firstname, users.lastname AS borrower_lastname, equipments.name AS equipment_name')
             ->join('users', 'users.user_id = borrows.user_id')
             ->join('equipments', 'equipments.equipment_id = borrows.equipment_id')
+            ->where('borrows.is_deleted', 0)
+            ->where('users.is_deactivated', 0)
             ->where('borrows.status', 'returned')
             ->orderBy('return_date', 'DESC')
             ->findAll();
@@ -57,8 +61,8 @@ class Returns extends BaseController {
         $data = [
             'title' => 'Returning Dashboard',
             'admin' => session()->get('admin'),
-            'active_borrows'=> $active_borrows,
-            'returns'=> $returns,
+            'active_borrows' => $active_borrows,
+            'returns' => $returns,
             'prefill_borrow_id' => $prefillBorrowId,
         ];
 
@@ -69,71 +73,71 @@ class Returns extends BaseController {
     }
 
     // Handle return insertion
-public function insert()
-{
-    $borrowId = $this->request->getPost('borrow_id');
+    public function insert()
+    {
+        $borrowId = $this->request->getPost('borrow_id');
 
-    $borrowsModel = new \App\Models\Borrows_Model();
-    $equipmentsModel = new \App\Models\Equipments_Model();
+        $borrowsModel = new \App\Models\Borrows_Model();
+        $equipmentsModel = new \App\Models\Equipments_Model();
 
-    // Get borrow record
-    $borrow = $borrowsModel->find($borrowId);
+        // Get borrow record
+        $borrow = $borrowsModel->find($borrowId);
 
-    if ($borrow && $borrow['status'] != 'returned') {
+        if ($borrow && $borrow['status'] != 'returned') {
 
-        // Mark borrow as returned
-        $borrowsModel->update($borrowId, [
-            'status' => 'returned',
-            'return_date' => date('Y-m-d H:i:s'),
-        ]);
-
-        // Add returned quantity back to equipment
-        $equipment = $equipmentsModel->find($borrow['equipment_id']);
-        if ($equipment) {
-            $newQty = ($equipment['available_count'] ?? 0) + $borrow['quantity'];
-            $equipmentsModel->update($borrow['equipment_id'], [
-                'available_count' => $newQty,
-                'is_available'   => 1 // optional flag if you want
+            // Mark borrow as returned
+            $borrowsModel->update($borrowId, [
+                'status' => 'returned',
+                'return_date' => date('Y-m-d H:i:s'),
             ]);
+
+            // Add returned quantity back to equipment
+            $equipment = $equipmentsModel->find($borrow['equipment_id']);
+            if ($equipment) {
+                $newQty = ($equipment['available_count'] ?? 0) + $borrow['quantity'];
+                $equipmentsModel->update($borrow['equipment_id'], [
+                    'available_count' => $newQty,
+                    'is_available' => 1 // optional flag if you want
+                ]);
+            }
+
+            // Flashdata for success modal
+            session()->setFlashdata('return_success', true);
         }
 
-        // Flashdata for success modal
-        session()->setFlashdata('return_success', true);
+        return redirect()->to(base_url('returns'));
     }
 
-    return redirect()->to(base_url('returns'));
-}
+    public function clearAll()
+    {
+        $borrowsModel = new \App\Models\Borrows_Model();
 
-public function clearAll()
-{
-    $borrowsModel = new \App\Models\Borrows_Model();
+        // Get all returned borrows
+        $returnedBorrows = $borrowsModel->where('status', 'returned')->findAll();
 
-    // Get all returned borrows
-    $returnedBorrows = $borrowsModel->where('status', 'returned')->findAll();
-
-    foreach ($returnedBorrows as $borrow) {
-        // Reset borrow status
-        $borrowsModel->update($borrow['borrow_id'], [
-            'status' => 'borrowed',
-            'return_date' => null
-        ]);
-
-        // Update equipment quantity
-        $equipmentModel = new \App\Models\Equipments_Model();
-        $equipment = $equipmentModel->find($borrow['equipment_id']);
-        if ($equipment) {
-            $newQty = ($equipment['available_count'] ?? 0) + $borrow['quantity'];
-            $equipmentModel->update($borrow['equipment_id'], [
-                'available_count' => $newQty,
-                'is_available'   => 1
+        foreach ($returnedBorrows as $borrow) {
+            // Reset borrow status
+            $borrowsModel->update($borrow['borrow_id'], [
+                'status' => 'borrowed',
+                'return_date' => null
             ]);
-        }
-    }
 
-    session()->setFlashdata('return_success', 'All return records cleared.');
-    return redirect()->to(base_url('returns'));
-}
-     public function view($id)
+            // Update equipment quantity
+            $equipmentModel = new \App\Models\Equipments_Model();
+            $equipment = $equipmentModel->find($borrow['equipment_id']);
+            if ($equipment) {
+                $newQty = ($equipment['available_count'] ?? 0) + $borrow['quantity'];
+                $equipmentModel->update($borrow['equipment_id'], [
+                    'available_count' => $newQty,
+                    'is_available' => 1
+                ]);
+            }
+        }
+
+        session()->setFlashdata('return_success', 'All return records cleared.');
+        return redirect()->to(base_url('returns'));
+    }
+    public function view($id)
     {
         if (!session()->get('admin')) {
             return redirect()->to(base_url('auth/login'));
