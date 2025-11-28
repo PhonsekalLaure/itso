@@ -38,6 +38,11 @@ $routes->post('users/update/(:num)', 'Users::update/$1');
 
 // Routes for Equipments controller
 $routes->get('equipments', 'Equipments::index');
+$routes->post('equipments/insert', 'Equipments::insert');
+$routes->get('equipments/delete/(:num)', 'Equipments::delete/$1');
+$routes->get('equipments/view/(:num)', 'Equipments::view/$1');
+$routes->get('equipments/edit/(:num)', 'Equipments::edit/$1');
+$routes->post('equipments/update/(:num)', 'Equipments::update/$1'); // if handling form submission
 
 
 // Routes for Borrows controller
