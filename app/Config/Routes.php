@@ -51,7 +51,12 @@ $routes->post('borrows/insert', 'Borrows::insert');
 
 
 // Routes for Returns controller
-$routes->get('returns', 'Returns::index');
+$routes->get('returns', 'Returns::index');    // <-- add this
+$routes->post('returns/insert', 'Returns::insert');
+$routes->get('returns/clearAll', 'Returns::clearAll');
+$routes->get('returns/view/(:num)', 'Returns::view/$1');
+
+
 
 // Routes for Reservations controller
 $routes->get('reservations', 'Reservations::index');
