@@ -81,7 +81,16 @@
 
     <!-- RETURN LOGS panel -->
     <div class="quick-box">
-        <div class="section-title d-flex align-items-center gap-2"><i class="bi bi-journal-check"></i> RETURN LOGS</div>
+        <div class="section-title d-flex align-items-center justify-content-between gap-2">
+            <div>
+                <i class="bi bi-journal-check"></i> RETURN LOGS
+            </div>
+            <div>
+                <a href="#" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#clearAllModal">
+                    Clear All
+                </a>
+            </div>
+        </div>
 
         <div class="table-responsive">
             <table class="table align-middle mb-0 users-table">
@@ -106,11 +115,6 @@
                                    class="btn btn-outline-success btn-sm me-1" title="View">
                                     <span class="material-symbols-outlined">visibility</span>
                                 </a>
-                                <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete" 
-                                   data-id="<?= $return['return_id']; ?>"
-                                   data-name="<?= htmlspecialchars($return['borrower_name'] ?? 'return record'); ?>">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -121,158 +125,125 @@
 
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete return record</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Process Return Confirmation Modal -->
+<div class="modal fade" id="confirmReturnModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-warning">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title">Confirm Return</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete this return record for <strong id="modalReturnName"></strong>?
+                Are you sure you want to process this return?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-danger" id="confirmDeleteBtn">Delete</a>
+                <button type="button" class="btn btn-warning" id="confirmReturnBtn">Yes, Process Return</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Clear All Confirmation Modal -->
+<div class="modal fade" id="clearAllModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title">Confirm Clear All</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to clear <b>all returned records</b>?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="<?= base_url('returns/clearAll'); ?>" class="btn btn-warning">Clear All</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Set default return date to current date/time
-        var now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('return_date').value = now.toISOString().slice(0, 16);
+document.addEventListener('DOMContentLoaded', function () {
+    // Set default return date
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('return_date').value = now.toISOString().slice(0, 16);
 
-        // Show borrow details when borrow record is selected
-        document.getElementById('borrow_id').addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex];
-            var borrower = selectedOption.getAttribute('data-borrower');
-            var equipment = selectedOption.getAttribute('data-equipment');
-            var quantity = selectedOption.getAttribute('data-quantity');
-            var borrowDate = selectedOption.getAttribute('data-borrow-date');
+    // Borrow details logic
+    document.getElementById('borrow_id').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        if (!selectedOption.value) return;
 
-            document.getElementById('detailBorrower').textContent = borrower;
-            document.getElementById('detailEquipment').textContent = equipment;
-            document.getElementById('detailQuantity').textContent = quantity;
-            document.getElementById('detailBorrowDate').textContent = new Date(borrowDate).toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            document.getElementById('borrowDetails').style.display = 'block';
+        document.getElementById('detailBorrower').textContent = selectedOption.getAttribute('data-borrower');
+        document.getElementById('detailEquipment').textContent = selectedOption.getAttribute('data-equipment');
+        document.getElementById('detailQuantity').textContent = selectedOption.getAttribute('data-quantity');
+        document.getElementById('detailBorrowDate').textContent = new Date(selectedOption.getAttribute('data-borrow-date')).toLocaleString('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
         });
 
-        // If server provided a prefill borrow id, select it and trigger change
-        <?php if (!empty($prefill_borrow_id)): ?>
-        (function() {
-            var pre = '<?= esc($prefill_borrow_id) ?>';
-            var sel = document.getElementById('borrow_id');
-            if (sel) {
-                // Wait a tick to ensure options are populated
-                setTimeout(function() {
-                    sel.value = pre;
-                    sel.dispatchEvent(new Event('change'));
-                    // Scroll to the form so the user sees it
-                    var formTop = document.getElementById('borrowDetails');
-                    if (formTop) formTop.scrollIntoView({ behavior: 'smooth' });
-                }, 50);
-            }
-        })();
-        <?php endif; ?>
-
-        // Auto-suggest penalty based on condition
-        document.getElementById('condition_status').addEventListener('change', function() {
-            var condition = this.value;
-            var penaltyField = document.getElementById('penalty_amount');
-            
-            if (condition === 'damaged') {
-                penaltyField.value = '100.00';
-            } else if (condition === 'broken') {
-                penaltyField.value = '500.00';
-            } else if (condition === 'lost') {
-                penaltyField.value = '1000.00';
-            } else {
-                penaltyField.value = '0.00';
-            }
-        });
-
-        // Delete modal functionality
-        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-        var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-        var modalReturnName = document.getElementById('modalReturnName');
-
-        document.querySelectorAll('.btn-delete').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                var returnId = this.getAttribute('data-id');
-                var returnName = this.getAttribute('data-name');
-                modalReturnName.textContent = returnName;
-                confirmDeleteBtn.href = "<?= base_url('returns/delete/') ?>" + returnId;
-                deleteModal.show();
-            });
-        });
-
-        // Form validation
-        var form = document.getElementById('addReturnForm');
-        form.addEventListener('submit', function(e) {
-            var returnDate = new Date(document.getElementById('return_date').value);
-            var now = new Date();
-
-            if (returnDate > now) {
-                e.preventDefault();
-                alert('Return date cannot be in the future!');
-                return false;
-            }
-        });
-
-        // Reset form handler
-        document.querySelector('button[type="reset"]').addEventListener('click', function() {
-            document.getElementById('borrowDetails').style.display = 'none';
-        });
+        document.getElementById('borrowDetails').style.display = 'block';
     });
+
+    // Reset form handler
+    document.querySelector('button[type="reset"]').addEventListener('click', function() {
+        document.getElementById('borrowDetails').style.display = 'none';
+    });
+
+    // Process Return confirmation modal
+    var form = document.getElementById('addReturnForm');
+    var confirmModal = new bootstrap.Modal(document.getElementById('confirmReturnModal'));
+    var confirmBtn = document.getElementById('confirmReturnBtn');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var returnDate = new Date(document.getElementById('return_date').value);
+        var now = new Date();
+        if (returnDate > now) {
+            alert('Return date cannot be in the future!');
+            return false;
+        }
+
+        confirmModal.show();
+    });
+
+    confirmBtn.addEventListener('click', function() {
+        confirmModal.hide();
+        form.submit(); // submit after confirmation
+    });
+});
 </script>
 
 <style>
-    /* Minor table theming to align with dashboard palette */
-    .users-table thead th {
-        background: #eaf6ef;
-        color: #0b824a;
-        border-bottom: 2px solid #0b824a;
-    }
-
-    .users-table tbody tr td {
-        border-top: 1px solid #e3e3e3;
-    }
-
-    .quick-box .section-title {
-        color: #0b824a;
-        font-weight: 700;
-    }
-
-    /* Form styling */
-    .quick-box form .form-label {
-        color: #0b824a;
-        font-size: 14px;
-        margin-bottom: 5px;
-    }
-
-    .quick-box form .form-control,
-    .quick-box form select,
-    .quick-box form textarea {
-        border: 1px solid #dcdcdc;
-        border-radius: 8px;
-        padding: 8px 12px;
-    }
-
-    .quick-box form .form-control:focus,
-    .quick-box form select:focus,
-    .quick-box form textarea:focus {
-        border-color: #0b824a;
-        box-shadow: 0 0
+.users-table thead th {
+    background: #eaf6ef;
+    color: #0b824a;
+    border-bottom: 2px solid #0b824a;
+}
+.users-table tbody tr td {
+    border-top: 1px solid #e3e3e3;
+}
+.quick-box .section-title {
+    color: #0b824a;
+    font-weight: 700;
+}
+.quick-box form .form-label {
+    color: #0b824a;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.quick-box form .form-control,
+.quick-box form select,
+.quick-box form textarea {
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+.quick-box form .form-control:focus,
+.quick-box form select:focus,
+.quick-box form textarea:focus {
+    border-color: #0b824a;
+    box-shadow: 0 0 5px rgba(11,130,74,0.3);
+}
+</style>
