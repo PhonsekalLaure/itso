@@ -1,17 +1,52 @@
-<header class="text-center py-4">
-    <h1 class="mb-0">Borrow Log Details</h1>
-</header>
-<main>
-    <div class="col col-md-8 mx-auto">
-        <div class="card shadow-sm mt-4">
-            <div class="card-body">
+<div class="main-content">
+
+    <!-- Page Header -->
+    <div class="dashboard-header d-flex justify-content-between align-items-center">
+        <h2>BORROW LOG DETAILS</h2>
+        <div>
+            <i class="bi bi-cart-fill" style="font-size: 40px; color:white;"></i>
+        </div>
+    </div>
+
+    <!-- Borrow Details Section -->
+    <div class="row gx-5 gy-4 mt-5">
+        <div class="col-md-8">
+            <div class="activities-box" id="borrow-view-container">
+                <div class="section-title">
+                    <i class="bi bi-receipt"></i> Borrow Information
+                </div>
+
                 <form>
+                    <style>
+                        .borrow-form-group {
+                            margin-bottom: 1.75rem;
+                            padding-bottom: 1.75rem;
+                            border-bottom: 1px solid #e9ecef;
+                        }
+                        .borrow-form-group:last-of-type {
+                            border-bottom: none;
+                            padding-bottom: 0;
+                            margin-bottom: 1.5rem;
+                        }
+                        .section-subtitle {
+                            font-size: 14px;
+                            font-weight: 600;
+                            color: #495057;
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                            padding-bottom: 0.75rem;
+                            border-bottom: 2px solid #0b824a;
+                        }
+                    </style>
+
                     <!-- Borrower Information Section -->
-                    <h5 class="mb-3 border-bottom pb-2">Borrower Information</h5>
+                    <div class="section-subtitle">
+                        <i class="bi bi-person-fill"></i> Borrower Information
+                    </div>
                     
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="borrower_name" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 account_circle
                             </span>
                             Borrower Name
@@ -22,9 +57,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="email" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 mail
                             </span>
                             Email
@@ -36,11 +71,13 @@
                     </div>
 
                     <!-- Equipment Information Section -->
-                    <h5 class="mb-3 border-bottom pb-2 mt-4">Equipment Information</h5>
+                    <div class="section-subtitle">
+                        <i class="bi bi-box-fill"></i> Equipment Information
+                    </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="equipment_name" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 inventory_2
                             </span>
                             Equipment Name
@@ -51,9 +88,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="description" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 description
                             </span>
                             Description
@@ -64,11 +101,13 @@
                     </div>
 
                     <!-- Borrow Details Section -->
-                    <h5 class="mb-3 border-bottom pb-2 mt-4">Borrow Details</h5>
+                    <div class="section-subtitle">
+                        <i class="bi bi-clock-history"></i> Borrow Details
+                    </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="quantity" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 shopping_cart
                             </span>
                             Quantity
@@ -79,35 +118,35 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="borrow_date" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 calendar_today
                             </span>
                             Borrow Date
                         </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="borrow_date" name="borrow_date" readonly
-                                value="<?= $borrow['borrow_date']; ?>">
+                                value="<?= date('M d, Y h:i A', strtotime($borrow['borrow_date'])); ?>">
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="return_date" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 event_available
                             </span>
                             Return Date
                         </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="return_date" name="return_date" readonly
-                                value="<?= $borrow['return_date'] ?? 'Not returned'; ?>">
+                                value="<?= $borrow['return_date'] ? date('M d, Y h:i A', strtotime($borrow['return_date'])) : 'Not returned'; ?>">
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="borrow-form-group row">
                         <label for="status" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 info
                             </span>
                             Status
@@ -129,5 +168,33 @@
                 </form>
             </div>
         </div>
+
+        <!-- Quick Info Card -->
+        <div class="col-md-4">
+            <div class="quick-box">
+                <div class="section-title">
+                    <i class="bi bi-info-circle-fill"></i> Borrow Summary
+                </div>
+                <div style="padding: 15px; background-color: #f8f9fa; border-radius: 8px; margin-bottom: 15px;">
+                    <p><strong>Borrower:</strong> <?= $borrow['borrower_name']; ?></p>
+                    <p><strong>Equipment:</strong> <?= $borrow['equipment_name']; ?></p>
+                    <p><strong>Quantity:</strong> <span class="badge bg-info"><?= $borrow['quantity']; ?></span></p>
+                    <p><strong>Status:</strong> 
+                        <?php 
+                            $statusColor = strtolower($borrow['status']) === 'borrowed' ? 'bg-warning' : 'bg-success';
+                        ?>
+                        <span class="badge <?= $statusColor; ?>"><?= ucfirst($borrow['status']); ?></span>
+                    </p>
+                    <p><strong>Borrowed:</strong> <?= date('M d, Y', strtotime($borrow['borrow_date'])); ?></p>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+
+</div>
+
+<style>
+    #borrow-view-container {
+        height: 100%;
+    }
+</style>

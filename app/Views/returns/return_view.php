@@ -1,20 +1,55 @@
-<header class="text-center py-4">
-    <h1 class="mb-0">Return Log Details</h1>
-</header>
-<main>
-    <div class="col col-md-8 mx-auto">
-        <div class="card shadow-sm mt-4">
-            <div class="card-body">
+<div class="main-content">
+
+    <!-- Page Header -->
+    <div class="dashboard-header d-flex justify-content-between align-items-center">
+        <h2>RETURN LOG DETAILS</h2>
+        <div>
+            <i class="bi bi-arrow-return-left" style="font-size: 40px; color:white;"></i>
+        </div>
+    </div>
+
+    <!-- Return Details Section -->
+    <div class="row gx-5 gy-4 mt-5">
+        <div class="col-md-8">
+            <div class="activities-box" id="return-view-container">
+                <div class="section-title">
+                    <i class="bi bi-box-arrow-in-left"></i> Return Information
+                </div>
+
                 <form>
-                    <!-- Borrower Information Section -->
-                    <h5 class="mb-3 border-bottom pb-2">Return Information</h5>
+                    <style>
+                        .return-form-group {
+                            margin-bottom: 1.75rem;
+                            padding-bottom: 1.75rem;
+                            border-bottom: 1px solid #e9ecef;
+                        }
+                        .return-form-group:last-of-type {
+                            border-bottom: none;
+                            padding-bottom: 0;
+                            margin-bottom: 1.5rem;
+                        }
+                        .section-subtitle {
+                            font-size: 14px;
+                            font-weight: 600;
+                            color: #495057;
+                            margin-top: 1.5rem;
+                            margin-bottom: 1rem;
+                            padding-bottom: 0.75rem;
+                            border-bottom: 2px solid #0b824a;
+                        }
+                    </style>
+
+                    <!-- Returner Information Section -->
+                    <div class="section-subtitle">
+                        <i class="bi bi-person-fill"></i> Returner Information
+                    </div>
                     
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="borrower_name" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 account_circle
                             </span>
-                            Return Name
+                            Name
                         </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="borrower_name" name="borrower_name" readonly
@@ -22,9 +57,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="email" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 mail
                             </span>
                             Email
@@ -36,11 +71,13 @@
                     </div>
 
                     <!-- Equipment Information Section -->
-                    <h5 class="mb-3 border-bottom pb-2 mt-4">Equipment Information</h5>
+                    <div class="section-subtitle">
+                        <i class="bi bi-box-fill"></i> Equipment Information
+                    </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="equipment_name" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 inventory_2
                             </span>
                             Equipment Name
@@ -51,9 +88,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="description" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 description
                             </span>
                             Description
@@ -63,12 +100,14 @@
                         </div>
                     </div>
 
-                    <!-- Borrow Details Section -->
-                    <h5 class="mb-3 border-bottom pb-2 mt-4">Borrow Details</h5>
+                    <!-- Return Details Section -->
+                    <div class="section-subtitle">
+                        <i class="bi bi-clock-history"></i> Return Details
+                    </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="quantity" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 shopping_cart
                             </span>
                             Quantity
@@ -79,35 +118,35 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="borrow_date" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 calendar_today
                             </span>
                             Borrow Date
                         </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="borrow_date" name="borrow_date" readonly
-                                value="<?= $borrow['borrow_date']; ?>">
+                                value="<?= date('M d, Y h:i A', strtotime($borrow['borrow_date'])); ?>">
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="return_date" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 event_available
                             </span>
                             Return Date
                         </label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="return_date" name="return_date" readonly
-                                value="<?= $borrow['return_date'] ?? 'Not returned'; ?>">
+                                value="<?= $borrow['return_date'] ? date('M d, Y h:i A', strtotime($borrow['return_date'])) : 'Not returned'; ?>">
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
+                    <div class="return-form-group row">
                         <label for="status" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">
                                 info
                             </span>
                             Status
@@ -119,99 +158,43 @@
                     </div>
 
                     <div class="d-flex justify-content-start mt-4">
-                <a href="<?= base_url('returns') ?>" class="btn btn-secondary d-flex align-items-center gap-1">
-    <span class="material-symbols-outlined">arrow_back</span>
-</a>
-
-
-
-
+                        <a href="<?= base_url("returns") ?>" class="btn btn-secondary d-flex align-items-center gap-1">
+                            <span class="material-symbols-outlined">
+                                arrow_back
+                            </span>
+                            Back
+                        </a>
                     </div>
                 </form>
             </div>
         </div>
+
+        <!-- Quick Info Card -->
+        <div class="col-md-4">
+            <div class="quick-box">
+                <div class="section-title">
+                    <i class="bi bi-info-circle-fill"></i> Return Summary
+                </div>
+                <div style="padding: 15px; background-color: #f8f9fa; border-radius: 8px; margin-bottom: 15px;">
+                    <p><strong>Returner:</strong> <?= $borrow['borrower_name']; ?></p>
+                    <p><strong>Equipment:</strong> <?= $borrow['equipment_name']; ?></p>
+                    <p><strong>Quantity:</strong> <span class="badge bg-info"><?= $borrow['quantity']; ?></span></p>
+                    <p><strong>Status:</strong> 
+                        <?php 
+                            $statusColor = strtolower($borrow['status']) === 'returned' ? 'bg-success' : 'bg-warning';
+                        ?>
+                        <span class="badge <?= $statusColor; ?>"><?= ucfirst($borrow['status']); ?></span>
+                    </p>
+                    <p><strong>Returned:</strong> <?= $borrow['return_date'] ? date('M d, Y', strtotime($borrow['return_date'])) : 'Not yet'; ?></p>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+
+</div>
 
 <style>
-/* Center the card and give it width */
-main .col {
-    margin-top: 3rem;
-}
-
-.card {
-    border-radius: 15px;
-    border: 1px solid #dee2e6;
-    max-width: 700px;
-    margin: 0 auto;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-}
-
-/* Card body padding */
-.card-body {
-    padding: 2.5rem;
-}
-
-/* Section headers */
-h5 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #495057;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #dee2e6;
-}
-
-/* Inputs and textareas */
-input[readonly],
-textarea[readonly] {
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    color: #495057;
-    height: 45px;
-    font-size: 1rem;
-    padding: 0.5rem;
-}
-
-textarea[readonly] {
-    min-height: 80px;
-}
-
-/* Labels icons */
-label span.material-symbols-outlined {
-    color: #6c757d;
-    font-size: 24px;
-}
-
-/* Back button */
-a.btn-secondary {
-    padding: 0.6rem 1.2rem;
-    font-weight: 500;
-    font-size: 1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-a.btn-secondary:hover {
-    background-color: #5a6268;
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .card-body {
-        padding: 1.5rem;
+    #return-view-container {
+        height: 100%;
     }
-    input[readonly], textarea[readonly] {
-        font-size: 0.95rem;
-    }
-}
 </style>
