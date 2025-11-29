@@ -7,27 +7,6 @@
             <div class="card-body">
                 <form>
                     <div class="mb-3 row">
-                        <label class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined" style="font-size: 28px;">
-                                image
-                            </span>
-                            Image
-                        </label>
-                        <div class="col-sm-9">
-                            <?php if (!empty($equipment['image'])): ?>
-                                <img src="<?= base_url('public/assets/images/products/' . $equipment['image']); ?>" alt="<?= $equipment['name']; ?>" class="img-fluid rounded" style="max-height: 200px;">
-                            <?php else: ?>
-                                <div class="text-muted">
-                                    <span class="material-symbols-outlined" style="font-size:48px;">
-                                        imagesmode
-                                    </span>
-                                    <p>No image available</p>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
                         <label for="name" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 28px;">
                                 inventory_2

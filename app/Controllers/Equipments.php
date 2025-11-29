@@ -58,7 +58,7 @@ public function insert()
         $model = new Equipments_Model();
         
         if ($model->find($id)) {
-            $model->delete($id);
+            $model->update($id, ['is_deactivated' => 1]);
             return redirect()->to(base_url('equipments'))->with('success', 'Equipment deleted successfully.');
         } else {
             return redirect()->to(base_url('equipments'))->with('error', 'Equipment not found.');
@@ -92,13 +92,18 @@ public function insert()
     {
         $equipmentModel = new Equipments_Model(); // instantiate the model
 
-        $equipment = $equipmentModel->find($id); // will work now
+        $data = [
+            'title' => 'Edit Equipment',
+            'equipment' => $equipmentModel->find($id),
+        ];
 
-        if (!$equipment) {
+        if (!$data['equipment']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Equipment not found');
         }
-
-        return view('equipments/edit_view', ['equipment' => $equipment]);
+        return view('include\head_view', $data)
+        . view('include\nav_view')
+        . view('equipments/edit_view', $data) // point to view_view.php
+        . view('include\foot_view');
     }
 
 

@@ -9,22 +9,49 @@
     z-index: 1000;
 }
 
-.sidebar a {
-    display: block;
+/* Main nav links */
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding: 12px 20px;
     color: white;
     text-decoration: none;
     font-size: 16px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-weight: 500;
+    transition: 0.2s ease;
 }
 
-.sidebar a:hover {
-    background: rgba(255, 255, 255, 0.2);
+/* Hover on nav links: white translucent background + black text */
+.sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: black !important;
 }
 
-.sidebar a.active {
-    background: white;
-    color: #1b3a4b;
+/* Active state */
+.nav-active {
+    background-color: white !important;
+    color: black !important;
     font-weight: bold;
+}
+
+/* Logout button */
+.logout-btn {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+/* Logout hover: red text + red border + translucent red background */
+.logout-btn:hover {
+    background-color: rgba(255, 0, 0, 0.15);
+    border-color: red;
+    color: red !important;
 }
 
 /* Sidebar title */
@@ -43,47 +70,11 @@
     opacity: 0.6;
 }
 
-/* Nav buttons */
-.sidebar .nav-link {
-    border-radius: 8px;
-    margin-bottom: 6px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 15px;
-}
-
-/* Active */
-.nav-active {
-    background-color: #fabc15 !important;
-    color: white !important;
-}
-
-/* Inactive */
-.nav-inactive {
-    background-color: white !important;
-    color: black !important;
-}
-
-/* Logout button */
-.logout-btn {
-    background-color: rgba(255, 255, 255, 0.85);
-    color: black;
-    border-radius: 8px;
-    font-weight: 600;
-}
-
-.logout-btn:hover {
-    background-color: white;
-}
-
 /* Toggle button */
 .sidebar-toggle-btn {
     display: none;
 }
 
-/* Responsive: Sidebar collapses */
 @media(max-width: 992px) {
     .sidebar {
         position: fixed;

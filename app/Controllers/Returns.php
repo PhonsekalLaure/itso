@@ -133,45 +133,40 @@ public function clearAll()
     session()->setFlashdata('return_success', 'All return records cleared.');
     return redirect()->to(base_url('returns'));
 }
-  public function view($id)
-{
-    if (!session()->get('admin')) {
-        return redirect()->to(base_url('auth/login'));
+     public function view($id)
+    {
+        if (!session()->get('admin')) {
+            return redirect()->to(base_url('auth/login'));
+        }
+        $borrowsModel = model('Borrows_Model');
+        $usersModel = model('Users_Model');
+        $equipmentsModel = model('Equipments_Model');
+
+        // Get the borrow record with user and equipment details
+        $borrow = $borrowsModel
+            ->select('borrows.*, users.firstname, users.lastname, users.email, equipments.name AS equipment_name, equipments.description')
+            ->join('users', 'users.user_id = borrows.user_id')
+            ->join('equipments', 'equipments.equipment_id = borrows.equipment_id')
+            ->where('borrows.borrow_id', $id)
+            ->first();
+
+        if (!$borrow) {
+            return redirect()->back()->with('error', 'Borrow record not found');
+        }
+
+        // Format the user and equipment names
+        $borrow['borrower_name'] = trim($borrow['firstname'] . ' ' . $borrow['lastname']);
+
+        $data = [
+            'title' => 'View Borrow Log',
+            'borrow' => $borrow
+        ];
+
+        return view('include/head_view', $data)
+            . view('include/nav_view')
+            . view('borrows/view_view', $data)
+            . view('include/foot_view');
     }
-
-    $borrowsModel = model('Borrows_Model');
-    $usersModel = model('Users_Model');
-    $equipmentsModel = model('Equipments_Model');
-
-    // Get the borrow record with user + equipment details
-    $borrow = $borrowsModel
-        ->select('borrows.*, users.firstname, users.lastname, users.email,
-                  equipments.name AS equipment_name, equipments.description,
-                  equipments.accessories')
-        ->join('users', 'users.user_id = borrows.user_id')
-        ->join('equipments', 'equipments.equipment_id = borrows.equipment_id')
-        ->where('borrows.borrow_id', $id)
-        ->first();
-
-    if (!$borrow) {
-        return redirect()->back()->with('error', 'Borrow record not found');
-    }
-
-    // Add custom formatted borrower name
-    $borrow['borrower_name'] = trim($borrow['firstname'] . ' ' . $borrow['lastname']);
-
-    $data = [
-        'title' => 'Return Information',
-        'borrow' => $borrow
-    ];
-
-return view('include/head_view', $data)
-    . view('include/nav_view')
-    . view('returns/return_view', $data)
-    . view('include/foot_view');
-
-}
-
 }
 
 

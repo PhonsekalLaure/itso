@@ -30,7 +30,6 @@ $routes->get('users/verify/(:segment)', 'Users::verify/$1');
 $routes->get('users/view/(:num)', 'Users::view/$1');
 $routes->get('users/edit/(:num)', 'Users::edit/$1');
 $routes->get('users/delete/(:num)', 'Users::delete/$1');
-
 // Post routes
 $routes->post('users/insert', 'Users::insert');
 $routes->post('users/update/(:num)', 'Users::update/$1');
@@ -63,12 +62,15 @@ $routes->get('returns/view/(:num)', 'Returns::view/$1');
 $routes->get('returns/dashboard', 'Returns::dashboard');
 
 
-
 // Routes for Reservations controller
 $routes->get('reservations', 'Reservations::index');
 
 
-
+$routes->get('reports', 'Reports::index');
+// Report generation routes (POST from reports view forms)
+$routes->post('reports/active-equipment', 'Reports::activeEquipment');
+$routes->post('reports/unusable-equipment', 'Reports::unusableEquipment');
+$routes->post('reports/borrowing-history', 'Reports::borrowingHistory');
 
 
 
