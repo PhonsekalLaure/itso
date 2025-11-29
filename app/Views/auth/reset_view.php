@@ -31,7 +31,7 @@
 
     <p class="mt-2" style="color: #eee;">Enter your new password below.</p>
 
-    <form action="<?= base_url('auth/reset/' . $token) ?>" method="post" novalidate id="resetForm">
+    <form action="<?= base_url('auth/reset/' . $token) ?>" method="post" id="resetForm">
         <?= csrf_field() ?>
 
         <input type="password" class="form-control my-2" id="password" name="password" placeholder="New password"

@@ -26,7 +26,7 @@
 
     <h2 class="mt-2">Login</h2>
 
-    <form action="<?= base_url('auth/authenticate') ?>" method="post" novalidate>
+    <form action="<?= base_url('auth/authenticate') ?>" method="post">
         <input type="text" class="form-control my-2" id="username" name="username" value="<?= set_value('username') ?>"
             placeholder="Your username" required>
         <input type="password" class="form-control my-2" id="password" name="password" placeholder="Your password"
