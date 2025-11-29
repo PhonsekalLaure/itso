@@ -15,6 +15,7 @@ class Reservations_Model extends Model {
         'reservation_date',
         'pickup_date',
         'status',
+        'is_deleted',
     ];
     protected bool $allowEmptyInserts = false;
 
@@ -30,6 +31,9 @@ class Reservations_Model extends Model {
                               equipments.description AS equipment_description')
                     ->join('users', 'users.user_id = reservations.user_id')
                     ->join('equipments', 'equipments.equipment_id = reservations.equipment_id')
+                    ->where('reservations.is_deleted', 0)
+                    ->where('users.is_deactivated', 0)
+                    ->where('equipments.is_deactivated', 0)
                     ->orderBy('reservation_date', 'DESC')
                     ->findAll();
     }

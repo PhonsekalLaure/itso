@@ -90,7 +90,7 @@ class Reservations extends BaseController {
         $equipmentModel->update($reservation['equipment_id'], ['available_count' => $newAvailableCount]);
 
         // Delete the reservation
-        $reservationModel->delete($id);
+        $reservationModel->update($id, ['is_deleted' => 1]);
         return redirect()->to(base_url('reservations'))->with('success', 'Reservation deleted and inventory restored');
     }
 
