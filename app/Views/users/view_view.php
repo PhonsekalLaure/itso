@@ -9,9 +9,9 @@
     </div>
 
     <!-- User Details Section -->
-    <div class="row gx-5 gy-4">
+    <div class="row gx-5 gy-4 mt-5">
         <div class="col-md-8">
-            <div class="activities-box">
+            <div class="activities-box" id="user-view-container">
                 <div class="section-title">
                     <i class="bi bi-person-fill"></i> User Information
                 </div>
@@ -93,3 +93,9 @@
     </div>
 
 </div>
+
+<style>
+    #user-view-container {
+        height: 100%;
+    }
+</style>
