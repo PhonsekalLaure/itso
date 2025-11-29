@@ -14,13 +14,21 @@ class Users extends BaseController
 
         $usermodel = new Users_Model();
 
+        // Use pagination to limit results and provide pager object to the view
+        $perPage = 10; // change this number to show more/less rows per page
+        $users = $usermodel
+            ->where('is_deactivated', 0)
+            ->where('is_verified', 1)
+            ->orderBy('role', 'ASC')
+            ->paginate($perPage);
+
         $data = [
             'title' => 'Users Dashboard',
             'admin' => session()->get('admin'),
-            'users' => $usermodel->where('is_deactivated', 0)
-                ->where('is_verified', 1)
-                ->orderBy('role', 'ASC')
-                ->findAll()
+            // keep the existing 'pages' key for backward compatibility and also provide 'pager'
+            'pages' => $usermodel->pager,
+            'pager' => $usermodel->pager,
+            'users' => $users,
         ];
 
         return view('include/head_view', $data)
