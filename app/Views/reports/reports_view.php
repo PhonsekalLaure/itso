@@ -100,43 +100,47 @@
 
             <form action="<?= base_url('reports/borrowing-history'); ?>" method="post">
                 <div class="row g-3">
-                    <div class="col-md-6">
+                    <!-- User Selection - Full Width -->
+                    <div class="col-12">
                         <label for="user_id" class="form-label fw-bold">
                             <i class="bi bi-person-badge"></i> Select User (Optional)
                         </label>
                         <select class="form-control" id="user_id" name="user_id">
                             <option value="">All Users</option>
                             <?php foreach ($users as $user): ?>
-                                <option value="<?= $user['user_id'] ?>">
-                                    <?= $user['firstname'] . ' ' . $user['lastname'] ?> (<?= $user['email'] ?>)
+                                <option value="<?= esc($user['user_id']) ?>">
+                                    <?= esc($user['firstname'] . ' ' . $user['lastname']) ?> (<?= esc($user['email']) ?>)
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    <!-- Date Range - Side by Side -->
+                    <div class="col-md-6">
                         <label for="date_from" class="form-label fw-bold">
                             <i class="bi bi-calendar-range"></i> From Date (Optional)
                         </label>
-                        <input type="date" class="form-control" id="date_from" name="date_from">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="date_to" class="form-label fw-bold">
-                            <i class="bi bi-calendar-range"></i> To Date (Optional)
-                        </label>
-                        <input type="date" class="form-control" id="date_to" name="date_to">
+                        <input type="date" class="form-control" id="date_from" name="date_from" value="<?= set_value('date_from') ?>">
                     </div>
 
                     <div class="col-md-6">
+                        <label for="date_to" class="form-label fw-bold">
+                            <i class="bi bi-calendar-range"></i> To Date (Optional)
+                        </label>
+                        <input type="date" class="form-control" id="date_to" name="date_to" value="<?= set_value('date_to') ?>">
+                    </div>
+
+                    <!-- Export Format - Full Width -->
+                    <div class="col-12">
                         <label for="format_history" class="form-label fw-bold">
                             <i class="bi bi-file-earmark"></i> Export Format
                         </label>
-                        <select class="form-control" id="format_history" name="format" disabled required>
+                        <select class="form-control" id="format_history" name="format" disabled>
                             <option value="pdf" selected>PDF Document</option>
                         </select>
                     </div>
 
+                    <!-- Action Buttons -->
                     <div class="col-12 text-end">
                         <button type="reset" class="btn btn-outline-secondary">
                             <i class="bi bi-x-circle"></i> Clear Filters
