@@ -97,23 +97,25 @@ public function view($id = null) {
 
 public function approve($id = null) {
     $reservationModel = new Reservations_Model();
-    $reservationModel->update($id, ['status' => 'approved']);
+    $reservationModel->update($id, ['status' => 'Ready for Pickup']); // DB enum value
     return redirect()->to(base_url('reservations/view/' . $id))
                      ->with('success', 'Reservation approved successfully');
 }
 
 public function cancel($id) {
     $reservationModel = new Reservations_Model();
-    $reservationModel->update($id, ['status' => 'cancelled']);
+    $reservationModel->update($id, ['status' => 'Canceled']); // DB enum value
     return redirect()->to(base_url('reservations/view/' . $id))
                      ->with('success', 'Reservation cancelled successfully');
 }
 
 public function pickup($id) {
     $reservationModel = new Reservations_Model();
-    $reservationModel->update($id, ['status' => 'picked_up']);
+    $reservationModel->update($id, ['status' => 'Finished']); // DB enum value
     return redirect()->to(base_url('reservations/view/' . $id))
                      ->with('success', 'Equipment marked as picked up');
 }
+
+
 
 }
