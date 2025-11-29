@@ -92,7 +92,7 @@
                     <i class="bi bi-lightning-fill"></i> Quick Actions
                 </div>
                 <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
-                    <button class="quick-btn" onclick="window.location.href='<?= site_url('equipment/add') ?>'">
+                    <button class="quick-btn" onclick="window.location.href='<?= site_url('equipments') ?>'">
                         <i class="bi bi-plus-circle"></i> Add Equipment
                     </button>
                 <?php endif; ?>

@@ -1,122 +1,179 @@
 <?php
-namespace App\Controllers;
-use App\Models\Equipments_Model; // <- must match your model class name
+namespace App\Database\Seeds;
 
-class Equipments extends BaseController
+use CodeIgniter\Database\Seeder;
+use CodeIgniter\I18n\Time;
+
+class EquipmentSeeder extends Seeder
 {
-    public function index()
+    public function run()
     {
-        if (!session()->get('admin')) {
-            return redirect()->to(base_url('auth/login'));
-        }
+        $now = Time::now('UTC')->toDateTimeString();
 
-        $equipmentmodel = model('Equipments_Model');
-        $perPage = 10;
-        $equipments = $equipmentmodel
-            ->where('is_deactivated', 0)
-            ->paginate($perPage);
-        $perPage = 10;
-
-
-        $data = array(
-            'title' => 'Equipment Dashboard',
-            'admin' => session()->get('admin'),
-            'pages' => $equipmentmodel->pager,
-            'equipments' => $equipments
-        );
-
-        return view('include\head_view', $data)
-            . view('include\nav_view')
-            . view('equipments\equipments_dashboard', $data)
-            . view('include\foot_view');
-    }
-    public function insert()
-    {
-        $model = new Equipments_Model();
-
-        // Get POST data
-        $totalCount = $this->request->getPost('total_count');
-        $availableCount = $this->request->getPost('available_count');
-
-        // Option 2: default available_count to total_count if not provided
-        if ($availableCount === null || $availableCount === '') {
-            $availableCount = $totalCount;
-        }
-
-        $data = [
-            'name' => $this->request->getPost('name'),
-            'description' => $this->request->getPost('description'),
-            'accessories' => $this->request->getPost('accessories'),
-            'total_count' => $totalCount,
-            'available_count' => $availableCount,
-            'is_deactivated' => $this->request->getPost('is_deactivated') ?? 0,
-            'date_added' => date('Y-m-d H:i:s'),
+        $equipments = [
+            [
+                'name' => 'Laptop (Lenovo)',
+                'description' => 'Standard student laptop for general use.',
+                'accessories' => 'Charger',
+                'total_count' => 15,
+                'available_count' => 11, // 4 laptops currently borrowed (Bob 1, Charlie 2, Eve 1)
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'DLP Projector',
+                'description' => 'Digital Light Processing Projector.',
+                'accessories' => 'Extension cord, VGA/HDMI cable, Power cable',
+                'total_count' => 5,
+                'available_count' => 4, // Charlie borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Wacom Drawing Tablet',
+                'description' => 'Medium size professional graphics tablet.',
+                'accessories' => 'Pen',
+                'total_count' => 8,
+                'available_count' => 8, // Frank returned his borrow
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'HDMI Cable',
+                'description' => '10-meter High-Definition Multimedia Interface cable.',
+                'accessories' => NULL,
+                'total_count' => 30,
+                'available_count' => 25, // Alice borrowed 5
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Lab Room Key',
+                'description' => 'Key for Computer Lab Room 305.',
+                'accessories' => NULL,
+                'total_count' => 2,
+                'available_count' => 1, // Dana borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Desktop Computer',
+                'description' => 'High-performance desktop for programming and design.',
+                'accessories' => 'Keyboard, Mouse',
+                'total_count' => 20,
+                'available_count' => 19, // Grace borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Wireless Mouse',
+                'description' => 'Ergonomic wireless mouse for general use.',
+                'accessories' => 'USB Receiver',
+                'total_count' => 25,
+                'available_count' => 23, // Henry borrowed 2
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Mechanical Keyboard',
+                'description' => 'Durable mechanical keyboard with backlight.',
+                'accessories' => NULL,
+                'total_count' => 15,
+                'available_count' => 15, // Isabella returned hers
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'External Hard Drive',
+                'description' => '1TB portable external hard drive.',
+                'accessories' => 'USB Cable',
+                'total_count' => 10,
+                'available_count' => 9, // Jack borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Network Switch',
+                'description' => '24-port Gigabit Ethernet switch.',
+                'accessories' => 'Power Adapter',
+                'total_count' => 4,
+                'available_count' => 3, // Karen borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Router',
+                'description' => 'Dual-band wireless router for lab use.',
+                'accessories' => 'Power Adapter',
+                'total_count' => 6,
+                'available_count' => 6, // Liam returned his
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Microphone',
+                'description' => 'USB condenser microphone for recording.',
+                'accessories' => 'Stand, USB Cable',
+                'total_count' => 7,
+                'available_count' => 6, // Mia borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Webcam',
+                'description' => 'HD webcam for online meetings.',
+                'accessories' => 'USB Cable',
+                'total_count' => 12,
+                'available_count' => 11, // Noah borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'VR Headset',
+                'description' => 'Virtual reality headset for immersive applications.',
+                'accessories' => 'Controllers, Charger',
+                'total_count' => 3,
+                'available_count' => 2, // Olivia borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Arduino Kit',
+                'description' => 'Starter kit for electronics and IoT projects.',
+                'accessories' => 'Cables, Sensors',
+                'total_count' => 10,
+                'available_count' => 9, // Paul borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Raspberry Pi',
+                'description' => 'Mini computer for embedded projects.',
+                'accessories' => 'Power Adapter, Case',
+                'total_count' => 8,
+                'available_count' => 7, // Quinn borrowed 1
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Ethernet Cable',
+                'description' => '5-meter Cat6 Ethernet cable.',
+                'accessories' => NULL,
+                'total_count' => 40,
+                'available_count' => 35, // Ryan borrowed 5
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Power Bank',
+                'description' => '20,000mAh portable power bank.',
+                'accessories' => 'USB Cable',
+                'total_count' => 10,
+                'available_count' => 10, // not borrowed
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Laser Pointer',
+                'description' => 'Presentation laser pointer with remote control.',
+                'accessories' => 'Battery',
+                'total_count' => 5,
+                'available_count' => 5, // not borrowed
+                'is_deactivated' => 0,
+            ],
+            [
+                'name' => 'Tripod Stand',
+                'description' => 'Adjustable tripod stand for cameras and projectors.',
+                'accessories' => NULL,
+                'total_count' => 6,
+                'available_count' => 6, // not borrowed
+                'is_deactivated' => 0,
+            ],
         ];
 
-        $model->insert($data);
-
-        return redirect()->to(base_url('equipments')); // redirect back to listing
+        $equipmentsModel = model('Equipments_Model');
+        $equipmentsModel->insertBatch($equipments);
     }
-
-    public function delete($id = null)
-    {
-        if ($id === null) {
-            return redirect()->to(base_url('equipments'))->with('error', 'No equipment ID provided.');
-        }
-
-        $model = new Equipments_Model();
-
-        if ($model->find($id)) {
-            $model->update($id, ['is_deactivated' => 1]);
-            return redirect()->to(base_url('equipments'))->with('success', 'Equipment deleted successfully.');
-        } else {
-            return redirect()->to(base_url('equipments'))->with('error', 'Equipment not found.');
-        }
-    }
-    public function view($id = null)
-    {
-        if ($id === null) {
-            return redirect()->to(base_url('equipments'))->with('error', 'No equipment ID provided.');
-        }
-
-        $model = new Equipments_Model();
-        $equipment = $model->find($id);
-
-        if (!$equipment) {
-            return redirect()->to(base_url('equipments'))->with('error', 'Equipment not found.');
-        }
-
-        $data = [
-            'title' => 'View Equipment',
-            'admin' => session()->get('admin'),
-            'equipment' => $equipment
-        ];
-
-        return view('include\head_view', $data)
-            . view('include\nav_view')
-            . view('equipments\view_view', $data) // point to view_view.php
-            . view('include\foot_view');
-    }
-    public function edit($id)
-    {
-        $equipmentModel = new Equipments_Model(); // instantiate the model
-
-        $data = [
-            'title' => 'Edit Equipment',
-            'equipment' => $equipmentModel->find($id),
-        ];
-
-        if (!$data['equipment']) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Equipment not found');
-        }
-        return view('include\head_view', $data)
-            . view('include\nav_view')
-            . view('equipments/edit_view', $data) // point to view_view.php
-            . view('include\foot_view');
-    }
-
-
-
 }
-
-?>
