@@ -17,7 +17,19 @@
                 </div>
 
                 <form>
-                    <div class="mb-3 row">
+                    <style>
+                        .user-form-group {
+                            margin-bottom: 1.75rem;
+                            padding-bottom: 1.75rem;
+                            border-bottom: 1px solid #e9ecef;
+                        }
+                        .user-form-group:last-of-type {
+                            border-bottom: none;
+                            padding-bottom: 0;
+                            margin-bottom: 1.5rem;
+                        }
+                    </style>
+                    <div class="user-form-group row">
                         <label for="role" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                 assignment_ind
@@ -29,7 +41,7 @@
                                 value="<?= ucfirst($user['role']); ?>">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="user-form-group row">
                         <label for="firstname" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                 account_circle
@@ -41,7 +53,7 @@
                                 value="<?= $user['firstname']; ?>">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="user-form-group row">
                         <label for="lastname" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                 person
@@ -53,7 +65,7 @@
                                 value="<?= $user['lastname']; ?>">
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div class="user-form-group row">
                         <label for="email" class="col-sm-3 col-form-label fw-bold d-flex align-items-center gap-2">
                             <span class="material-symbols-outlined" style="font-size: 20px;">
                                 mail

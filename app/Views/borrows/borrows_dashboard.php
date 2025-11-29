@@ -144,24 +144,26 @@
                                 <span class="badge <?= $badgeClass ?>"><?= ucfirst($status) ?></span>
                             </td>
                             <td class="text-end pe-3">
-                                <a href="<?= base_url('borrows/view/' . $borrow['borrow_id']); ?>"
-                                    class="btn btn-outline-success btn-sm me-1" title="View">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </a>
-                                <?php if ($status != 'returned'): ?>
-                                    <a href="<?= base_url('borrows/return/' . $borrow['borrow_id']); ?>" class="btn btn-outline-primary btn-sm me-1 btn-return" title="Mark as Returned"
-                                        data-id="<?= $borrow['borrow_id']; ?>"
-                                        data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrower'); ?>">
-                                        <span class="material-symbols-outlined">assignment_return</span>
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="<?= base_url('borrows/view/' . $borrow['borrow_id']); ?>"
+                                        class="btn btn-outline-success btn-sm" title="View">
+                                        <span class="material-symbols-outlined">visibility</span>
                                     </a>
-                                <?php endif; ?>
-                                <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
-                                    <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
-                                        data-id="<?= $borrow['borrow_id']; ?>"
-                                        data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrow record'); ?>">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a>
-                                <?php endif; ?>
+                                    <?php if ($status != 'returned'): ?>
+                                        <a href="<?= base_url('borrows/return/' . $borrow['borrow_id']); ?>" class="btn btn-outline-primary btn-sm btn-return" title="Mark as Returned"
+                                            data-id="<?= $borrow['borrow_id']; ?>"
+                                            data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrower'); ?>">
+                                            <span class="material-symbols-outlined">assignment_return</span>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
+                                        <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
+                                            data-id="<?= $borrow['borrow_id']; ?>"
+                                            data-name="<?= htmlspecialchars($borrow['borrower_name'] ?? 'borrow record'); ?>">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>

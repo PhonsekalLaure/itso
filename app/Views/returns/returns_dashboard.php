@@ -110,10 +110,12 @@
                             <td><?= $return['quantity'] ?? '0' ?></td>
                             <td><?= date('M d, Y h:i A', strtotime($return['return_date'])) ?></td>
                             <td class="text-end pe-3">
-                                <a href="<?= base_url('returns/view/' . $return['return_id']); ?>"
-                                    class="btn btn-outline-success btn-sm me-1" title="View">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </a>
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="<?= base_url('returns/view/' . $return['return_id']); ?>"
+                                        class="btn btn-outline-success btn-sm" title="View">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>

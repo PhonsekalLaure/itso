@@ -127,22 +127,24 @@
                             <td><?= $user['lastname'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td class="text-end pe-3">
-                                <a href="<?= base_url('users/view/' . $user['user_id']); ?>"
-                                    class="btn btn-outline-success btn-sm me-1" title="View">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </a>
-                                <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
-                                    <a href="<?= base_url('users/edit/' . $user['user_id']); ?>"
-                                        class="btn btn-outline-warning btn-sm me-1" title="Edit">
-                                        <span class="material-symbols-outlined">edit</span>
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="<?= base_url('users/view/' . $user['user_id']); ?>"
+                                        class="btn btn-outline-success btn-sm" title="View">
+                                        <span class="material-symbols-outlined">visibility</span>
                                     </a>
+                                    <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
+                                        <a href="<?= base_url('users/edit/' . $user['user_id']); ?>"
+                                            class="btn btn-outline-warning btn-sm" title="Edit">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </a>
 
-                                    <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
-                                        data-id="<?= $user['user_id']; ?>"
-                                        data-name="<?= htmlspecialchars($user['firstname']) . " " . htmlspecialchars($user['lastname']); ?>">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </a>
-                                <?php endif; ?>
+                                        <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
+                                            data-id="<?= $user['user_id']; ?>"
+                                            data-name="<?= htmlspecialchars($user['firstname']) . " " . htmlspecialchars($user['lastname']); ?>">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>

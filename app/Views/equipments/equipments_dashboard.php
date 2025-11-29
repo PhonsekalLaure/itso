@@ -111,21 +111,23 @@
                             <td><?= $eq['total_count'] ?? '' ?></td>
                             <td><?= $eq['available_count'] ?? '' ?></td>
                             <td class="text-end">
-                                <a href="<?= base_url('equipments/view/' . $eq['equipment_id']); ?>"
-                                    class="btn btn-outline-success btn-sm me-1" title="View">
-                                    <span class="material-symbols-outlined">visibility</span>
-                                </a>
-                                <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
-                                <a href="<?= base_url('equipments/edit/' . $eq['equipment_id']); ?>"
-                                    class="btn btn-outline-warning btn-sm me-1" title="Edit">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </a>
-                                <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
-                                    data-id="<?= $eq['equipment_id']; ?>"
-                                    data-name="<?= htmlspecialchars($eq['name'] ?? 'equipment'); ?>">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </a>
-                                <?php endif; ?>
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="<?= base_url('equipments/view/' . $eq['equipment_id']); ?>"
+                                        class="btn btn-outline-success btn-sm" title="View">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </a>
+                                    <?php if (isset($admin) && strtolower($admin['role']) === 'sadmin'): ?>
+                                    <a href="<?= base_url('equipments/edit/' . $eq['equipment_id']); ?>"
+                                        class="btn btn-outline-warning btn-sm" title="Edit">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a>
+                                    <a href="#" class="btn btn-outline-danger btn-sm btn-delete" title="Delete"
+                                        data-id="<?= $eq['equipment_id']; ?>"
+                                        data-name="<?= htmlspecialchars($eq['name'] ?? 'equipment'); ?>">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </a>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
