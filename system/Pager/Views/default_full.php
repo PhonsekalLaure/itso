@@ -8,6 +8,17 @@ use CodeIgniter\Pager\PagerRenderer;
 $pager->setSurroundCount(2);
 ?>
 
+<style>
+/* Pager styles applied globally so pagination looks consistent across the app */
+.pagination { display:flex; gap:8px; list-style:none; padding:0; margin:8px 0; }
+.pagination li { margin:0; }
+.pagination li a { display:block; padding:6px 10px; color:#0b824a; background:#fff; border:1px solid #e6e6e6; border-radius:6px; text-decoration:none; }
+.pagination li a:hover { background:#eaf6ef; color:#0b6f3e; }
+.pagination li.active { }
+.pagination li.active a { background:#0b824a; color:#fff; border-color:#0b824a; }
+.pagination li.disabled a { color:#aaa; cursor:default; background:#fafafa; }
+</style>
+
 <nav aria-label="<?= lang('Pager.pageNavigation') ?>">
 	<ul class="pagination">
 		<?php if ($pager->hasPrevious()) : ?>
