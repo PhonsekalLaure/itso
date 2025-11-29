@@ -59,6 +59,7 @@ $routes->get('returns', 'Returns::index');    // <-- add this
 $routes->post('returns/insert', 'Returns::insert');
 $routes->get('returns/clearAll', 'Returns::clearAll');
 $routes->get('returns/view/(:num)', 'Returns::view/$1');
+$routes->get('returns/dashboard', 'Returns::dashboard');
 
 
 // Routes for Reservations controller

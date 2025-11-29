@@ -4,7 +4,7 @@ namespace App\Controllers;
 use App\Models\Equipments_Model;
 use App\Models\Users_Model;
 use App\Models\Borrows_Model;
-use TCPDF;
+use App\Libraries\Html2Pdf;
 
 class Reports extends BaseController {
     protected $equipmentsModel;
@@ -123,35 +123,34 @@ class Reports extends BaseController {
     }
 
     protected function generatePDF($title, $filename, $data, $reportType, $htmlContent) {
-        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+        try {
+            $pdf = new Html2Pdf('P', 'mm', 'A4');
 
-        $pdf->SetCreator('ITSO System');
-        $pdf->SetAuthor('Equipment Management System');
-        $pdf->SetTitle($title);
-        $pdf->SetSubject($title);
+            $pdf->setCreator('ITSO System');
+            $pdf->setAuthor('Equipment Management System');
+            $pdf->setTitle($title);
+            $pdf->setSubject($title);
 
-        // Use a safe default monospaced font constant if available
-        if (defined('PDF_FONT_MONOSPACED')) {
-            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+            $pdf->setMargins(15, 15, 15);
+            $pdf->setHeaderMargin(5);
+            $pdf->setFooterMargin(10);
+            $pdf->setAutoPageBreak(true, 25);
+
+            $pdf->addPage();
+
+            // Build complete HTML for PDF
+            $finalHtml = '<h1>' . htmlspecialchars($title) . '</h1>';
+            $finalHtml .= '<p>Generated on: ' . date('M d, Y H:i:s A') . '</p>';
+            $finalHtml .= '<hr style="margin: 10px 0;">';
+            $finalHtml .= $htmlContent;
+
+            $pdf->writeHTML($finalHtml);
+
+            $pdf->output($filename, 'D');
+        } catch (\Exception $e) {
+            log_message('error', 'PDF Generation Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to generate PDF: ' . $e->getMessage());
         }
-
-        $pdf->SetMargins(15, 15, 15);
-        $pdf->SetHeaderMargin(5);
-        $pdf->SetFooterMargin(10);
-        $pdf->SetAutoPageBreak(TRUE, 25);
-
-        $pdf->AddPage();
-
-        $pdf->SetFont('helvetica', 'B', 16);
-        $pdf->Cell(0, 10, $title, 0, 1, 'C');
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->Cell(0, 5, 'Generated on: ' . date('M d, Y H:i:s A'), 0, 1, 'C');
-        $pdf->Ln(5);
-
-        $pdf->SetFont('helvetica', '', 9);
-        $pdf->writeHTML($htmlContent, true, false, true, false, '');
-
-        $pdf->Output($filename . '.pdf', 'D');
     }
 
     protected function formatEquipmentData($equipments) {

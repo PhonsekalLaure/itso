@@ -97,11 +97,11 @@
                     </button>
                 <?php endif; ?>
 
-                <button class="quick-btn" onclick="window.location.href='<?= site_url('borrow') ?>'">
+                <button class="quick-btn" onclick="window.location.href='<?= site_url('borrows') ?>'">
                     <i class="bi bi-cart-fill"></i> Process Borrowing
                 </button>
 
-                <button class="quick-btn" onclick="window.location.href='<?= site_url('return') ?>'">
+                <button class="quick-btn" onclick="window.location.href='<?= site_url('returns') ?>'">
                     <i class="bi bi-arrow-return-left"></i> Process Returning
                 </button>
 
