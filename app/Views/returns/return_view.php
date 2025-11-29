@@ -119,9 +119,10 @@
                     </div>
 
                     <div class="d-flex justify-content-start mt-4">
-                   <a href="<?= base_url('returns') ?>" class="btn btn-secondary d-flex align-items-center gap-1">
-    <span class="material-symbols-outlined">arrow_back</span> Back to Dashboard
+                <a href="<?= base_url('returns') ?>" class="btn btn-secondary d-flex align-items-center gap-1">
+    <span class="material-symbols-outlined">arrow_back</span>
 </a>
+
 
 
 
