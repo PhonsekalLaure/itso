@@ -92,14 +92,14 @@ class Index extends BaseController {
             ->join('users', 'users.user_id = reservations.user_id', 'left')
             ->join('equipments', 'equipments.equipment_id = reservations.equipment_id', 'left')
             ->where('reservations.reservation_date >=', $cutoffDate)
-            ->whereIn('reservations.status', ['Ready for Pickup', 'Finished', 'Canceled'])
+            ->whereIn('reservations.status', ['ready for pickup', 'finished', 'canceled'])
             ->orderBy('reservations.reservation_date', 'DESC')
             ->limit(20)
             ->findAll();
 
         foreach ($reservations as $reservation) {
             $userName = ($reservation['firstname'] ?? 'Unknown') . ' ' . ($reservation['lastname'] ?? '');
-            $statusLabel = $reservation['status'] === 'Finished' ? 'picked up' : strtolower($reservation['status']);
+            $statusLabel = strtolower($reservation['status']) === 'finished' ? 'picked up' : strtolower($reservation['status']);
             $activities[] = [
                 'type' => 'reservation',
                 'timestamp' => $reservation['reservation_date'],

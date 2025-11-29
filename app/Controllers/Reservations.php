@@ -20,8 +20,8 @@ class Reservations extends BaseController {
         $data = [
             'title' => 'Reservations Dashboard',
             'admin' => session()->get('admin'),
-            'users' => $userModel->findAll(),
-            'equipments' => $equipmentModel->findAll(),
+            'users' => $userModel->where('is_deactivated', 0)->findAll(),
+            'equipments' => $equipmentModel->where('is_deactivated', 0)->findAll(),
             'reservations' => $reservationModel->getReservationsWithNames(),
         ];
 
@@ -79,19 +79,22 @@ class Reservations extends BaseController {
             return redirect()->to(base_url('reservations'))->with('error', 'Reservation not found.');
         }
 
-        // Only allow delete if reservation is pending (not approved/picked up)
-        if ($reservation['status'] !== 'pending') {
-            return redirect()->back()->with('error', 'Cannot delete non-pending reservations.');
+        // Only allow delete if reservation is pending or canceled (not picked up/finished)
+        $status = strtolower(trim($reservation['status'] ?? 'pending'));
+        if (!in_array($status, ['pending', 'canceled'])) {
+            return redirect()->back()->with('error', 'Cannot delete reservations that have been picked up or are in progress.');
         }
 
-        // Restore the available count when canceling
-        $equipment = $equipmentModel->find($reservation['equipment_id']);
-        $newAvailableCount = $equipment['available_count'] + $reservation['quantity'];
-        $equipmentModel->update($reservation['equipment_id'], ['available_count' => $newAvailableCount]);
+        // Restore the available count only if reservation was never picked up
+        if ($status === 'pending') {
+            $equipment = $equipmentModel->find($reservation['equipment_id']);
+            $newAvailableCount = $equipment['available_count'] + $reservation['quantity'];
+            $equipmentModel->update($reservation['equipment_id'], ['available_count' => $newAvailableCount]);
+        }
 
-        // Delete the reservation
+        // Delete the reservation (soft delete)
         $reservationModel->update($id, ['is_deleted' => 1]);
-        return redirect()->to(base_url('reservations'))->with('success', 'Reservation deleted and inventory restored');
+        return redirect()->to(base_url('reservations'))->with('success', 'Reservation deleted successfully');
     }
 
 
@@ -142,8 +145,8 @@ public function approve($id = null) {
         return redirect()->to(base_url('reservations'))->with('error', 'Reservation not found.');
     }
 
-    // Update status to "Ready for Pickup"
-    $reservationModel->update($id, ['status' => 'Ready for Pickup']);
+    // Update status to "ready for pickup"
+    $reservationModel->update($id, ['status' => 'ready for pickup']);
 
     return redirect()->to(base_url('reservations/view/' . $id))
                      ->with('success', 'Reservation approved successfully');
@@ -158,8 +161,8 @@ public function cancel($id) {
         return redirect()->to(base_url('reservations'))->with('error', 'Reservation not found.');
     }
 
-    // Only allow cancel if not already picked up
-    if ($reservation['status'] === 'Finished') {
+    // Check if reservation status is 'finished'
+    if (strtolower($reservation['status']) === 'finished') {
         return redirect()->back()->with('error', 'Cannot cancel a completed reservation.');
     }
 
@@ -168,8 +171,8 @@ public function cancel($id) {
     $newAvailableCount = $equipment['available_count'] + $reservation['quantity'];
     $equipmentModel->update($reservation['equipment_id'], ['available_count' => $newAvailableCount]);
 
-    // Update status to "Canceled"
-    $reservationModel->update($id, ['status' => 'Canceled']);
+    // Update status to "canceled"
+    $reservationModel->update($id, ['status' => 'canceled']);
 
     return redirect()->to(base_url('reservations/view/' . $id))
                      ->with('success', 'Reservation cancelled successfully and inventory restored');
@@ -185,7 +188,7 @@ public function pickup($id) {
     }
 
     // Check if reservation is ready for pickup
-    if ($reservation['status'] !== 'Ready for Pickup') {
+    if (strtolower($reservation['status']) !== 'ready for pickup') {
         return redirect()->back()->with('error', 'Reservation must be approved before pickup.');
     }
 
@@ -202,8 +205,8 @@ public function pickup($id) {
 
     $borrowsModel->insert($borrowData);
 
-    // Update reservation status to "Finished"
-    $reservationModel->update($id, ['status' => 'Finished']);
+    // Update reservation status to "finished"
+    $reservationModel->update($id, ['status' => 'finished']);
 
     return redirect()->to(base_url('reservations/view/' . $id))
                      ->with('success', 'Equipment picked up successfully and borrow record created');

@@ -16,7 +16,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-29 09:15:00',
                 'pickup_date' => '2025-11-29 10:00:00',
-                'status' => 'Ready for Pickup',
+                'status' => 'ready for pickup',
                 'is_deleted' => 0,
             ],
             [
@@ -25,7 +25,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 2,
                 'reservation_date' => '2025-11-28 14:30:00',
                 'pickup_date' => '2025-11-28 15:00:00',
-                'status' => 'Finished',
+                'status' => 'finished',
                 'is_deleted' => 0,
             ],
             [
@@ -34,7 +34,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-27 11:00:00',
                 'pickup_date' => NULL,
-                'status' => 'Canceled',
+                'status' => 'canceled',
                 'is_deleted' => 0,
             ],
             [
@@ -43,7 +43,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-26 10:00:00',
                 'pickup_date' => '2025-11-26 12:00:00',
-                'status' => 'Finished',
+                'status' => 'finished',
                 'is_deleted' => 0,
             ],
             [
@@ -52,7 +52,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-25 09:30:00',
                 'pickup_date' => NULL,
-                'status' => 'Ready for Pickup',
+                'status' => 'ready for pickup',
                 'is_deleted' => 0,
             ],
             [
@@ -61,7 +61,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-25 16:00:00',
                 'pickup_date' => '2025-11-26 09:00:00',
-                'status' => 'Finished',
+                'status' => 'finished',
                 'is_deleted' => 0,
             ],
             [
@@ -70,7 +70,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-24 08:45:00',
                 'pickup_date' => NULL,
-                'status' => 'Canceled',
+                'status' => 'canceled',
                 'is_deleted' => 0,
             ],
             [
@@ -79,7 +79,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-24 13:20:00',
                 'pickup_date' => '2025-11-24 14:00:00',
-                'status' => 'Finished',
+                'status' => 'finished',
                 'is_deleted' => 0,
             ],
             [
@@ -88,7 +88,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-23 12:00:00',
                 'pickup_date' => NULL,
-                'status' => 'Canceled',
+                'status' => 'canceled',
                 'is_deleted' => 0,
             ],
             [
@@ -97,7 +97,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-23 15:30:00',
                 'pickup_date' => '2025-11-24 09:30:00',
-                'status' => 'Finished',
+                'status' => 'finished',
                 'is_deleted' => 0,
             ],
             [
@@ -106,7 +106,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 1,
                 'reservation_date' => '2025-11-29 08:00:00',
                 'pickup_date' => NULL,
-                'status' => 'Ready for Pickup',
+                'status' => 'ready for pickup',
                 'is_deleted' => 0,
             ],
             [
@@ -115,7 +115,7 @@ class ReservationsSeeder extends Seeder
                 'quantity' => 2,
                 'reservation_date' => '2025-11-28 09:45:00',
                 'pickup_date' => NULL,
-                'status' => 'Ready for Pickup',
+                'status' => 'ready for pickup',
                 'is_deleted' => 0,
             ],
         ];

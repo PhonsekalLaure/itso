@@ -104,13 +104,12 @@
                 </thead>
                 <tbody>
                     <?php foreach ($reservations as $reservation): 
-                        $status = strtolower($reservation['status'] ?? 'pending');
+                        $status = strtolower(trim($reservation['status'] ?? 'pending'));
                         $badgeClass = match($status) {
                             'pending' => 'bg-warning text-dark',
-                            'approved' => 'bg-success',
-                            'picked_up' => 'bg-primary',
-                            'cancelled' => 'bg-danger',
-                            'completed' => 'bg-dark',
+                            'ready for pickup' => 'bg-success',
+                            'finished' => 'bg-primary',
+                            'canceled' => 'bg-danger',
                             default => 'bg-secondary'
                         };
                     ?>
@@ -132,7 +131,7 @@
                                     <a href="#" class="btn btn-outline-warning btn-sm me-1 btn-cancel" data-id="<?= $reservation['reservation_id']; ?>" data-name="<?= htmlspecialchars($reservation['reserver_name'] ?? 'reserver'); ?>" title="Cancel">
                                         <span class="material-symbols-outlined">cancel</span>
                                     </a>
-                                <?php elseif ($status == 'approved'): ?>
+                                <?php elseif ($status == 'ready for pickup'): ?>
                                     <a href="#" class="btn btn-outline-primary btn-sm me-1 btn-pickup" data-id="<?= $reservation['reservation_id']; ?>" data-name="<?= htmlspecialchars($reservation['reserver_name'] ?? 'reserver'); ?>" title="Mark as Picked Up">
                                         <span class="material-symbols-outlined">shopping_bag</span>
                                     </a>

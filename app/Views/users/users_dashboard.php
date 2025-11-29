@@ -84,8 +84,8 @@
                         </label>
                         <select class="form-control" id="acctype" name="acctype" required>
                             <option value="" disabled selected>Select account type</option>
-                            <option value="student">Associate</option>
-                            <option value="associate">Student</option>
+                            <option value="associate">Associate</option>
+                            <option value="student">Student</option>
                         </select>
                     </div>
 

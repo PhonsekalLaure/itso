@@ -55,7 +55,7 @@ class Equipments extends BaseController
 
         $model->insert($data);
 
-        return redirect()->to(base_url('equipments')); // redirect back to listing
+        return redirect()->to(base_url('equipments'))->with('success', 'Equipment added successfully.'); // redirect back to listing
     }
 
     public function delete($id = null)
