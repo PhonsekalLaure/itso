@@ -63,7 +63,17 @@ $routes->get('returns/dashboard', 'Returns::dashboard');
 
 
 // Routes for Reservations controller
+// Reservations routes
+// Routes for Reservations controller
+// Reservations
 $routes->get('reservations', 'Reservations::index');
+$routes->get('reservations/view/(:num)', 'Reservations::view/$1');
+$routes->get('reservations/approve/(:num)', 'Reservations::approve/$1');
+$routes->get('reservations/cancel/(:num)', 'Reservations::cancel/$1');
+$routes->get('reservations/pickup/(:num)', 'Reservations::pickup/$1');
+$routes->get('reservations/delete/(:num)', 'Reservations::delete/$1');
+$routes->post('reservations/insert', 'Reservations::insert');
+
 
 
 $routes->get('reports', 'Reports::index');

@@ -15,6 +15,7 @@ class Returns extends BaseController {
         }
 
         $borrowsModel = new Borrows_Model();
+        $perPage = 10;
 
         // Active borrows (not yet returned)
         $active_borrows = $borrowsModel
@@ -34,7 +35,7 @@ class Returns extends BaseController {
             ->join('equipments', 'equipments.equipment_id = borrows.equipment_id')
             ->where('borrows.status', 'returned')
             ->orderBy('return_date', 'DESC')
-            ->findAll();
+            ->paginate($perPage);
 
         // Format borrower names
         foreach ($active_borrows as &$ab) {
@@ -53,6 +54,7 @@ class Returns extends BaseController {
             'admin' => session()->get('admin'),
             'active_borrows' => $active_borrows,
             'returns' => $returns,
+            'pages' => $borrowsModel->pager,
             'prefill_borrow_id' => $this->request->getGet('borrow_id'),
         ];
 

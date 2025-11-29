@@ -11,6 +11,7 @@ class Borrows extends BaseController
         $usersModel = model('Users_Model');
         $equipmentsModel = model('Equipments_Model');
         $borrowsModel = model('Borrows_Model');
+        $perPage = 10;
 
         // Active users for the borrower select
         $users = $usersModel->where('is_deactivated', 0)->findAll();
@@ -26,7 +27,7 @@ class Borrows extends BaseController
             ->where('borrows.is_deleted', 0)
             ->where('users.is_deactivated', 0)
             ->orderBy('borrow_date', 'DESC')
-            ->findAll();
+            ->paginate($perPage);
 
         // Normalize fields expected by the view
         foreach ($borrows as &$b) {
@@ -43,6 +44,7 @@ class Borrows extends BaseController
             'users' => $users,
             'equipments' => $equipments,
             'borrows' => $borrows,
+            'pages' => $borrowsModel->pager,
         );
 
         return view('include\head_view', $data)

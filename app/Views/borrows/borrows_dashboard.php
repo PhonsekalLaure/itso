@@ -168,6 +168,11 @@
                 </tbody>
             </table>
         </div>
+        <?php if (isset($pages) && $pages): ?>
+            <div class="d-flex justify-content-end mt-3">
+                <?= $pages->links() ?>
+            </div>
+        <?php endif; ?>
     </div>
 
 </div>

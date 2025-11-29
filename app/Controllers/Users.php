@@ -27,7 +27,6 @@ class Users extends BaseController
             'admin' => session()->get('admin'),
             // keep the existing 'pages' key for backward compatibility and also provide 'pager'
             'pages' => $usermodel->pager,
-            'pager' => $usermodel->pager,
             'users' => $users,
         ];
 
